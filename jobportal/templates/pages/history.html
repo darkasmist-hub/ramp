@@ -1,0 +1,53 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}
+  History
+{% endblock title %}
+
+{% block csslink %}
+<link rel="stylesheet" href="{%static 'css/style.css' %}" />
+<link rel="stylesheet" href="{%static 'css/history.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %} 
+
+{% block body %}
+<main class="history-container">
+       <nav>
+           <a class="history-btn-back" href="{% url 'accounts:home' %}">← Back to Dashboard</a>
+       </nav>
+        <div class="history-header">
+            <h1>Job Acceptance Historys</h1>
+            <p class="history-muted">A record of accepted offers and key details.</p>
+        </div>
+
+        <section class="history-timeline" aria-label="Job acceptance timeline">
+            <article class="history-entry" aria-labelledby="e1-date">
+                <span class="history-entry-marker" aria-hidden="true"></span>
+                <div id="e1-date" class="history-date">Dec 10, 2025</div>
+                <div class="history-meta">Software Engineer — Acme Corp — Full-time</div>
+                <div class="history-details">Accepted offer. Start date: Jan 5, 2026. Compensation: base + equity. Location:
+                    Remote-first.</div>
+                <div class="history-note">Signed contract and completed onboarding paperwork.</div>
+            </article>
+
+            <article class="history-entry" aria-labelledby="e2-date">
+                <span class="history-entry-marker" aria-hidden="true"></span>
+                <div id="e2-date" class="history-date">Sep 02, 2024</div>
+                <div class="history-meta">Frontend Developer — BetaWorks — Contract</div>
+                <div class="history-details">3-month contract to build UI components. Delivered early, received positive
+                    feedback.</div>
+                <div class="history-note">Rate: $X/hr. Project completed.</div>
+            </article>
+
+            <article class="history-entry" aria-labelledby="e3-date">
+                <span class="history-entry-marker" aria-hidden="true"></span>
+                <div id="e3-date" class="history-date">Mar 15, 2023</div>
+                <div class="history-meta">Intern — Gamma Labs — Internship</div>
+                <div class="history-details">Summer internship; worked on data pipelines and internal tools. Converted to
+                    part-time contract.</div>
+                <div class="history-note">Mentor: Jane Doe. Performance: exceeds expectations.</div>
+            </article>
+        </section>
+    </main>
+{% endblock body %}

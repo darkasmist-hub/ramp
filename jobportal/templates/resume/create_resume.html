@@ -1,0 +1,26 @@
+
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}
+  Create Resume
+{% endblock title %}
+{% block csslink %}
+  <link rel="stylesheet" href="{%static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{%static 'css/create_resume.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %}
+
+{% block body %}
+<h2 class="head-tittle">Create Resume</h2>
+<div class="resume-body">
+  <form action="{% url 'Pages:create_resume' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="resume-button-container">
+      <button type="submit" class="resume-btn">Generate Resume</button>
+    </div>
+  </form>
+</div>
+  
+{% endblock body %}

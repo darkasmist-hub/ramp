@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% block csslink %}
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %}
+
+<div class="container mt-5">
+    <h3>Apply for {{ job.title }}</h3>
+    <hr>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label>Cover Letter</label>
+            <textarea name="cover_letter" class="form-control" rows="5"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label>Upload Resume</label>
+            <input type="file" name="resume" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit Application</button>
+    </form>
+</div>
+
+{% endblock %}

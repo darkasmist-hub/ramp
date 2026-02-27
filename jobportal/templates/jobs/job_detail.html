@@ -1,0 +1,92 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block csslink %}
+<link rel="stylesheet" href="{%static 'css/style.css' %}" />
+<link rel="stylesheet" href="{%static 'css/job_detail.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %}
+
+{% block body %}
+<div class="job-container">
+
+    <!-- LEFT SIDE -->
+    <div>
+        <!-- MAIN JOB CARD -->
+        <div class="card">
+            <div class="job-title">{{ job.title }}</div>
+            <div class="company-name">{{ job.company_name }}</div>
+            <div class="salary">₹ {{ job.salary }}</div>
+
+            <div style="margin-top:15px;">
+                <span class="badge-custom">{{ job.job_type }}</span>
+                <span class="badge-custom">{{ job.location }}</span>
+            </div>
+
+            <a href="" class="apply-btn">
+                Apply Now
+            </a>
+        </div>
+
+        <!-- HIGHLIGHTS -->
+        <div class="card" style="margin-top:20px;">
+            <div class="section-title">Job Highlights</div>
+            <div class="highlight-box">
+                <div>🔥 Urgently hiring</div>
+                <div>👥 200+ Applicants</div>
+            </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="card" style="margin-top:20px;">
+            <div class="section-title">Job Description</div>
+            <p style="line-height:1.7; color:#555;">
+                {{ job.description }}
+            </p>
+        </div>
+
+        <!-- REQUIREMENTS -->
+        <div class="card" style="margin-top:20px;">
+            <div class="section-title">Job Requirements</div>
+            <ul style="line-height:1.8; color:#555;">
+                <li><strong>Experience:</strong> {{ job.experience }}</li>
+                <li><strong>Education:</strong> {{job.education }}</li>
+                <li><strong>Skills:</strong> {{ job.skills }}</li>
+                <li><strong>Shift:</strong> {{ job.shift }}</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="sticky-apply">
+        <div class="card">
+            <div class="section-title">Similar Jobs</div>
+
+            {% for s_job in similar_jobs %}
+            <div class="sidebar-job">
+                <a href="{% url 'jobs:job_detail' s_job.id %}" 
+                style="text-decoration:none; color:inherit;">
+                    <div>
+                        <div style="font-weight:600;">
+                            {{ s_job.title }}
+                        </div>
+                        <div style="font-size:13px; color:#6c757d;">
+                            {{ s_job.company_name }}
+                        </div>
+                        <div style="font-size:13px; color:#198754;">
+                            ₹ {{ s_job.salary }}
+                        </div>
+                        <a href="{% url 'jobs:job_detail' s_job.id %}" class="Apply-btn-sidebar">Apply For This Job</a>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+                <p>No similar jobs found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock body %}

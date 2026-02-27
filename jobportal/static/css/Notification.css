@@ -1,0 +1,22 @@
+.container {
+  width: 60%;
+  margin: 30px auto;
+}
+.notification {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-left: 5px solid #4f46e5;
+  border-radius: 6px;
+}
+.notification.read {
+  opacity: 0.6;
+  border-left-color: gray;
+}
+.title {
+  font-weight: bold;
+}
+.time {
+  font-size: 12px;
+  color: gray;
+}

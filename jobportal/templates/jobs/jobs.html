@@ -1,0 +1,188 @@
+{% extends 'home.html' %} 
+{% load static %} 
+{% block title %} Job Page {% endblock title %} 
+
+{% block csslink %}
+<link rel="stylesheet" href="{%static 'css/style.css' %}" />
+<link rel="stylesheet" href="{%static 'css/jobs.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %}
+
+
+{% block body %}
+<section class="occupation-section">
+  <div class="occupation">
+    <h2>Jobs in demand</h2>
+    <p>most viewed job recently</p>
+  </div>
+
+  <div class="Jobsfordisplay">
+    <div class="job-filter-container">
+      <div class="job-filter-head">
+        <span>🔍 Filter Jobs</span>
+      </div>
+      <div class="job-filter">
+        <div title="stations" id="station-id">
+          <h3>Near Bus/Metro</h3>
+          <div class="station-container">
+            <span>
+              <input title="Bus Stand" type="checkbox" value="Bus" />Near Bus
+              Stand
+            </span>
+            <span>
+              <input title="Metro Station" type="checkbox" value="Metro" />Near
+              Metro Stand
+            </span>
+            <span>
+              <input title="Cab Stand" type="checkbox" value="Cab" />Near Cab
+              Stand</span
+            >
+          </div>
+        </div>
+
+        <span class="line"></span>
+
+        <div title="location" class="location">
+          <h3>Location</h3>
+          <div class="loctaion-container">
+            <div class="location-search">
+              <input type="text" placeholder="Your Location" id="location" />
+              <i class="bx bx-search ml-2"></i>
+            </div>
+            <div class="all-location">
+              <span class="location-item" data-value="Delhi">Delhi</span>
+              <span class="location-item" data-value="Mumbai">Mumbai</span>
+              <span class="location-item" data-value="Nodia">Nodia</span>
+              <span class="location-item" data-value="Kolkata">Kolkata</span>
+            </div>
+          </div>
+        </div>
+
+        <span class="line"></span>
+
+        <div title="jobs" class="type-job">
+          <h3>Recent Job</h3>
+          <div class="type-job-container">
+            <span>
+              <input
+                type="checkbox"
+                title="Freelancer"
+                value="Freelancer"
+              />Freelancer
+            </span>
+            <span>
+              <input type="checkbox" title="Part Time" value="Part Time" />Part
+              Time
+            </span>
+            <span>
+              <input
+                type="checkbox"
+                title="Contractual"
+                value="Contractual"
+              />Contractual
+            </span>
+            <span>
+              <input type="checkbox" title="Full Time" value="Full Time" />Full
+              Time
+            </span>
+          </div>
+        </div>
+
+        <span class="line"></span>
+
+        <div title="salary" class="salary">
+          <h3>Salary</h3>
+          <div class="salary-container">
+            <span>
+              <input type="checkbox" title="Freelancer" value="5000" />5000+
+            </span>
+            <span>
+              <input type="checkbox" title="Freelancer" value="10000" />10000+
+            </span>
+            <span>
+              <input type="checkbox" title="Freelancer" value="20000" />20000+
+            </span>
+          </div>
+          <span class="salary-range">
+            <input
+              type="range"
+              title="salary"
+              id="salary-range"
+              min="0"
+              max="20000"
+              step="1000"
+              value="0"
+            />
+            <label>Min: <span id="range-value">0</span></label>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="jobs-container">
+      <div>
+        <div class="jlisthead">
+          <div class="jlisthead-section">
+            <h2>Available Jobs</h2>
+            <p>Browse through more than 100+ jobs</p>
+          </div>
+          <div class="jlisthead-filter">
+            <img
+              src="{% static 'images/filter.png' %}"
+              alt="filter-icon"
+              height="30px"
+              width="30px"
+              id="filter-icon"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="all-jobs">
+        {% for job in jobs %}
+              <div class="joblist"
+                  data-job="{{ job.location }}"
+                  data-type="{{ job.job_type }}"
+                  data-salary="{{ job.salary }}"
+                  data-station="{{ job.station }}">
+
+                <div class="flex">
+                  <div class="company-image-name">
+                    <img src="{% static 'images/logo.png' %}" alt="logo" height="150" width="150"/>
+                    <span>{{ job.company_name }}</span>
+                  </div>
+                  
+                  <div class="company-details">
+                    <h3>{{ job.title }}</h3>
+                    <p>{{ job.salary }}</p>
+                    <span>{{ job.job_type }}</span>
+                    <div>{{ job.location }}</div>
+                    <span>{{ job.station }}</span>
+                  </div>
+                </div>
+                  <div class="Apply-button">
+                    <a href="{% url 'jobs:job_detail' job.id %}" class="Apply-btn">Apply For This Job</a>
+                  </div>
+              </div>
+      {% endfor %}
+      </div>
+      <div class="pagination">
+          {% if jobs.has_previous %}
+              <a href="?page=1">First</a>
+              <a href="?page={{ jobs.previous_page_number }}">Previous</a>
+          {% endif %}
+
+          Page {{ jobs.number }} of {{ jobs.paginator.num_pages }}
+
+          {% if jobs.has_next %}
+              <a href="?page={{ jobs.next_page_number }}">Next</a>
+              <a href="?page={{ jobs.paginator.num_pages }}">Last</a>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock body %} 
+{% block jsfile %}
+<script src="{%static 'js/jobs.js' %}"></script>
+{% endblock jsfile %}

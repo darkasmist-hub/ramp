@@ -1,0 +1,117 @@
+.form-group {
+    margin-bottom: 15px;
+}
+
+.classic{
+    margin: 1rem 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    font-family: "Times New Roman";
+    padding: 30px;
+    border: 1px solid #000;
+}
+
+.resume {
+    width: 900px;
+    margin: 30px auto;
+    display: flex;
+    background: #fff;
+    flex-direction: row;
+}
+
+/* LEFT */
+.left {
+    width: 30%;
+    background: #1f2a35;
+    color: #fff;
+    padding: 30px 20px;
+}
+
+.profile-pic {
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-pic img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+}
+
+.left h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.role {
+    text-align: center;
+    color: #5dade2;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-top: 25px;
+}
+
+.section h3 {
+    border-bottom: 2px solid #5dade2;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-size: 16px;
+}
+
+.section ul {
+    list-style: none;
+}
+
+.section ul li {
+    margin-bottom: 8px;
+}
+
+/* RIGHT */
+.right {
+    width: 70%;
+    padding: 30px;
+}
+
+.content-section {
+    margin-bottom: 30px;
+}
+
+.content-section h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+.job, .edu {
+    margin-bottom: 20px;
+}
+
+.job h3, .edu h3 {
+    font-size: 18px;
+}
+
+.company {
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.date {
+    float: right;
+    font-size: 14px;
+    color: #555;
+}
+
+.job ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}

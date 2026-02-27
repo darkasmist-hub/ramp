@@ -1,0 +1,74 @@
+.service-card{
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+  position: relative;
+}
+.resume-btn{
+  display: inline-block;
+  padding: 0.45rem 0.7rem;
+  background: #093260;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.service-card h3{
+  font-size: 20px;
+  margin-left: 15%;
+  font-weight: 600;
+}
+.service-card p{
+  font-size: 15px;
+  margin-left: 15%;
+}
+
+.header {
+    background: #093260;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 40px;
+}
+
+.service-card-section {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.service-card-section:hover {
+    transform: translateY(-5px);
+}
+
+.service-card-section h2 {
+    margin-bottom: 10px;
+    color: #0f172a;
+}
+.service-card-section p {
+  font-size: 12px;
+}
+.service-card-section img{
+  width: 50%;
+}
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: #e5e7eb;
+    margin-top: 20px;
+}

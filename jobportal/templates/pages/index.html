@@ -1,0 +1,599 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    {% block title %}
+      Home-Page
+    {% endblock title %}
+      </title>
+      
+    {% block csslink %}
+      <link rel="stylesheet" href="{%static 'css/style.css' %}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% endblock csslink %}
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#0A2647",
+              secondary: "#456882",
+              darkblue: "#233851",
+              accent: "#FBC638",
+            },
+            fontFamily: { poppins: ["Poppins", "sans-serif"] },
+            keyframes: {
+        morph: {
+          '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+        },
+      },
+      animation: {
+        morph: 'morph 4s linear infinite',
+      },
+          },
+        },
+      };
+    </script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="font-poppins relative bg-gray-50">
+    <header class="bg-primary sticky top-0 z-50">
+      <nav class="max-w-[1200px] mx-auto px-4">
+        <div id="navbar" class="flex justify-between items-center h-[100px]">
+          <a href="{% url 'index' %}">
+            <img
+              class="w-[100px] md:w-[180px]"
+              src="{% static 'website/image/logo.png' %}"
+              alt="LOGO"
+            />
+          </a>
+
+          <ul
+            id="menu"
+            class="hidden md:flex items-center list-none space-x-0 md:space-x-10 text-white font-medium text-[1.1rem]"
+          >
+            <li>
+              <a href="{% url 'index' %}" class="hover:text-accent transition-colors"
+                >Home</a
+              >
+            </li>
+
+
+            <li class="relative group z-20">
+              <a href="{% url 'jobs' %}" class="hover:text-accent transition-colors"
+                >Jobs</a
+              >
+              <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg
+               opacity-0 invisible group-hover:opacity-100 group-hover:visible
+               transition-all duration-200">
+              <ul class="py-2 text-gray-700">
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Software Jobs
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Part Time Jobs
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Internships
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Jobs for Women
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                   Jobs for Freshers
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Night shift Jobs
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Remote Jobs
+                </li>
+              </ul>
+            </div>
+            </li>
+
+
+            <li class="relative group z-20">
+              <a href="{% url 'services' %}" class="hover:text-accent transition-colors"
+                >Services</a
+              >
+              <div class="absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg
+               opacity-0 invisible group-hover:opacity-100 group-hover:visible
+               transition-all duration-200 z-50">
+              <ul class="py-2 text-gray-700">
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  <a href="{% url 'create_resume' %}">Resume Building</a>
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  <a href="{% url 'counselling' %}">
+                    Career counselling
+                  </a>
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                    <a href="{% url 'Notification' %}">Notification & Job Alerts</a>
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Skill assessment tests
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                   <a href="{% url 'history' %}">History</a>
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                   <a href="{% url 'contact' %}">Contact Us</a>
+                </li>
+              </ul>
+            </div>
+            </li>
+
+
+            <li class="relative group">
+              <a href="{% url 'contact' %}" class="hover:text-accent transition-colors"
+                >Contact</a
+              >
+               <div class="absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg
+               opacity-0 invisible group-hover:opacity-100 group-hover:visible
+               transition-all duration-200 z-50">
+              <ul class="py-2 text-gray-700">
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  support
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Abc123@gmail.com
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  +1 234 567 890
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  <a href="index#faq-section">FAQs</a>
+                </li>
+              </ul>
+            </div>
+            </li>
+
+
+            <li>
+              <select
+                title="language"
+                class="lang-option bg-primary text-white p-2 rounded-lg border-none outline-none cursor-pointer md:ml-0"
+              >
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Spanish">Spanish</option>
+              </select>
+            </li>
+
+            <li class="hidden lg:block ml-10 p-0">
+              <div class="signin-buttons relative">
+                <a href="{% url 'sign' %}">
+
+                  <button
+                  class="blob-btn relative z-10 py-3 px-6 text-center uppercase text-[#0505A9] text-base font-bold bg-transparent border-none cursor-pointer rounded-[30px] overflow-hidden group hover:text-white transition-colors duration-500"
+                  >
+                  Sign In
+                  <span
+                  class="blob-btn__inner absolute inset-0 -z-10 bg-white rounded-[30px] overflow-hidden"
+                  >
+                  <span class="blob-btn__blobs relative block h-full">
+                    <span
+                    class="blob-btn__blob absolute top-[2px] w-1/4 h-full bg-[#0505A9] rounded-full"
+                    ></span>
+                    <span
+                    class="blob-btn__blob absolute top-[2px] w-1/4 h-full bg-[#0505A9] rounded-full"
+                    ></span>
+                    <span
+                    class="blob-btn__blob absolute top-[2px] w-1/4 h-full bg-[#0505A9] rounded-full"
+                    ></span>
+                    <span
+                    class="blob-btn__blob absolute top-[2px] w-1/4 h-full bg-[#0505A9] rounded-full"
+                    ></span>
+                  </span>
+                </span>
+              </button>
+            </a>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.1"
+                class="w-0 h-0 block"
+              >
+                <defs>
+                  <filter id="goo">
+                    <feGaussianBlur
+                      in="SourceGraphic"
+                      result="blur"
+                      stdDeviation="10"
+                    ></feGaussianBlur>
+                    <feColorMatrix
+                      in="blur"
+                      mode="matrix"
+                      values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7"
+                      result="goo"
+                    ></feColorMatrix>
+                    <feBlend
+                      in2="goo"
+                      in="SourceGraphic"
+                      result="mix"
+                    ></feBlend>
+                  </filter>
+                </defs>
+              </svg>
+            </li>
+            <li class="md:hidden">
+              <a href="{% url 'sign' %}"
+                ><button
+                  class="login bg-white text-primary px-6 py-2 rounded-full font-medium"
+                >
+                  Sign In
+                </button></a
+              >
+            </li>
+          </ul>
+
+          <i
+            id="bar"
+            class="bx bx-menu text-white text-3xl md:hidden cursor-pointer block"
+          ></i>
+        </div>
+      </nav>
+    </header>
+
+{% block body %}
+  <main>
+      <div
+        class="home-page bg-secondary py-12 px-6 flex flex-col md:flex-row items-center justify-evenly min-h-[500px]"
+      >
+        <div class="panel-one space-y-6 max-w-lg">
+          <div
+            class="content-page1 text-white text-[40px] font-medium leading-tight"
+          >
+            Find the job which help you become financial independent
+          </div>
+          <div class="search-bar flex items-center bg-transparent">
+            <input
+              type="text"
+              placeholder="What type of job?"
+              title="search-bar"
+              class="p-4 w-full md:w-[400px] h-12 rounded-l-xl border-none focus:outline-none"
+            />
+            <div class="search_logo">
+              <button
+                class="bg-primary text-white h-12 px-6 rounded-r-xl border-none flex items-center justify-center hover:bg-[#205295] transition duration-300 cursor-pointer"
+              >
+                Search <i class="bx bx-search ml-2"></i>
+              </button>
+            </div>
+          </div>
+          <div class="content-page2 text-white text-[15px] font-medium">
+            Work in a branded company with talented people who will guide you to
+            your career goals.
+          </div>
+        </div>
+        <div
+          class="model mt-10 md:mt-0 relative flex justify-center items-center"
+        >
+          <div class="photo-content">
+            <img
+              src="static/website/image/Screenshot 2025-12-19 141337.png"
+              alt="model"
+              class="h-[170px] md:h-[320px] drop-shadow-2xl"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section id="jobs" class="w-full bg-darkblue py-10">
+      <div class="jobs max-w-7xl mx-auto px-5">
+        <div class="job-section w-full text-center text-white mb-10">
+          <h1 class="text-3xl font-semibold mb-2">
+            What type of jobs you are looking for?
+          </h1>
+          <h2 class="text-lg font-normal hidden md:block">
+            choose the work in which you don't have to listen your boss nagging
+            or scolding
+          </h2>
+
+          <div
+            class="freelancer work-av flex flex-col md:flex-row items-center justify-evenly max-w-[90%] mx-auto mt-10 gap-8"
+          >
+            <div class="details text-left md:w-1/2">
+              <h3>
+                <a
+                  href="#"
+                  class="text-2xl text-white font-medium hover:underline"
+                  >Freelancer</a
+                >
+              </h3>
+              <p class="text-white text-lg mt-2">
+                Work as a freelancer with your skill whenever and wherever you
+                want and earn money
+              </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+              <img
+                src="static/website/image/pic1.avif"
+                alt="img"
+                class="h-[160px] md:h-[250px] rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+
+          <div
+            class="contracual work-av flex flex-col md:flex-row items-center justify-evenly max-w-[90%] mx-auto mt-10 gap-8"
+          >
+            <div class="details text-left md:w-1/2 md:order-last">
+              <h3>
+                <a
+                  href="#"
+                  class="text-2xl text-white font-medium hover:underline"
+                  >Contract-Jobs</a
+                >
+              </h3>
+              <p class="text-white text-lg mt-2">
+                Work on the term on contract with people you desire to work with
+              </p>
+            </div>
+
+            <div class="md:w-1/2 flex justify-center md:order-first">
+              <img
+                src="static/website/image/pic1.avif"
+                alt="img"
+                class="h-[160px] md:h-[250px] rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+
+          <div
+            class="part-time work-av flex flex-col md:flex-row items-center justify-evenly max-w-[90%] mx-auto mt-10 gap-8"
+          >
+            <div class="details text-left md:w-1/2">
+              <h3>
+                <a
+                  href="#"
+                  class="text-2xl text-white font-medium hover:underline"
+                  >Part-Time</a
+                >
+              </h3>
+              <p class="text-white text-lg mt-2">
+                why not earn some money in you free-time by working?
+              </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+              <img
+                src="static/website/image/pic1.avif"
+                alt="img"
+                class="h-[160px] md:h-[250px] rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="more-jobs pt-5 flex justify-center items-center">
+          <div class="wrapper">
+            <a
+              class="cta flex py-[10px] px-[45px] text-[40px] text-white bg-primary shadow-[6px_6px_0_black] skew-x-[-15deg] transition duration-1000 items-center justify-center outline-none"
+              href="{% url 'jobs' %}"
+            >
+              <span
+                class="note flex justify-center items-center skew-x-[15deg] text-[20px] font-semibold"
+                >Explore More Jobs</span
+              >
+              <span
+                class="note-two w-[20px] ml-[30px] relative top-[12%] transition duration-500"
+              >
+                <svg
+                  width="66px"
+                  height="43px"
+                  viewBox="0 0 66 43"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <path
+                      class="one transition duration-400 -translate-x-[60%]"
+                      d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z"
+                      fill="#FFFFFF"
+                    ></path>
+                    <path
+                      class="two transition duration-500 -translate-x-[30%]"
+                      d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z"
+                      fill="#FFFFFF"
+                    ></path>
+                    <path
+                      class="three"
+                      d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z"
+                      fill="#FFFFFF"
+                    ></path>
+                  </g>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hidden md:block">
+      <div
+        class="company w-full bg-secondary grid grid-rows-[0.2fr_1fr_1fr] gap-5 p-2 overflow-hidden"
+      >
+        <div class="comp-head">
+          <h2 class="text-[2rem] font-semibold ml-[3rem]">
+            <a href="#" class="text-white underline "
+              >Top company which is connect with us</a
+            >
+          </h2>
+        </div>
+        
+        <div class="top-brand flex gap-5 animate-slider-reverse">
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company.jpg" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company2.jpg" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company3.jpg" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company5.png" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company4.jpg" alt="" class="w-full h-full object-cover">
+</span>
+        </div>
+
+        <div class="top-brand flex gap-5 animate-slider"> 
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company.jpg" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company2.jpg" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company3.jpg" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company5.png" alt="" class="w-full h-full object-cover">
+</span>
+         <span class="w-[200px] max-h-[100px] aspect-square flex items-center justify-center overflow-hidden blob-company text-lg font-medium text-white bg-[#6c5ce7] hover:bg-[#a29bfe] hover:scale-110 transition-all duration-400 ease-in-out animate-morph outline-none border-none">
+  <img src="static/website/image/company4.jpg" alt="" class="w-full h-full object-cover">
+</span>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="service bg-darkblue text-white py-16">
+      <div class="service-box max-w-7xl mx-auto">
+        <div class="service-head px-[5%] mb-8 text-center md:text-left">
+          <h1 class="text-3xl font-bold">Need Some Help?</h1>
+          <p class="text-sm md:text-base opacity-90">
+            Most require and all time top services
+          </p>
+        </div>
+        <div
+          class="provide-services flex flex-wrap justify-between items-start px-[5%] gap-y-10"
+        >
+          <div class="assist w-full md:w-[45%] lg:w-[22%] text-center">
+            <img
+              src="static/website/image/pic1.avif"
+              alt=""
+              class="w-[150px] md:w-[250px] mx-auto mt-4 rounded-lg"
+            />
+            <h4 class="text-xl font-medium mt-4">Get a job</h4>
+            <p class="text-sm md:text-base opacity-80 mt-2">
+              Get a job on single click by simply filling the details
+            </p>
+          </div>
+          <div class="assist w-full md:w-[45%] lg:w-[22%] text-center">
+            <img
+              src="static/website/image/pic1.avif"
+              alt=""
+              class="w-[150px] md:w-[250px] mx-auto mt-4 rounded-lg"
+            />
+            <h4 class="text-xl font-medium mt-4">Contact us</h4>
+            <p class="text-sm md:text-base opacity-80 mt-2">
+              Get a job on single click by simply filling the details
+            </p>
+          </div>
+          <div class="assist w-full md:w-[45%] lg:w-[22%] text-center">
+            <img
+              src="static/website/image/pic1.avif"
+              alt=""
+              class="w-[150px] md:w-[250px] mx-auto mt-4 rounded-lg"
+            />
+            <h4 class="text-xl font-medium mt-4">Pay safely</h4>
+            <p class="text-sm md:text-base opacity-80 mt-2">
+              Get a job on single click by simply filling the details
+            </p>
+          </div>
+          <div class="assist w-full md:w-[45%] lg:w-[22%] text-center">
+            <img
+              src="static/website/image/pic1.avif"
+              alt=""
+              class="w-[150px] md:w-[250px] mx-auto mt-4 rounded-lg"
+            />
+            <h4 class="text-xl font-medium mt-4">We're here to help</h4>
+            <p class="text-sm md:text-base opacity-80 mt-2">
+              Get a job on single click by simply filling the details
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="FAQ">
+      
+      <div
+        class="faq-section max-w-7xl mx-auto px-5 py-16 flex flex-col md:flex-row items-center justify-between"
+      >
+        <div class="faq-content md:w-1/2 mb-10 md:mb-0">
+          <h2 class="text-3xl font-semibold mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-lg mb-6">
+            Have questions? We're here to help! Check out our frequently asked
+            questions below.
+          </p>
+          <a href="contact"
+            ><button
+              class="bg-primary text-white px-6 py-3 rounded-full hover:bg-[#205295] transition duration-300"
+            >
+              Contact Us
+            </button></a
+          >
+        </div>
+        <div class="faq-list md:w-1/2 w-full" id="faq-section">
+          <div class="faq-item mb-6">
+            <h3 class="text-xl font-medium mb-2">
+              How do I create an account?
+            </h3>
+            <p>
+              To create an account, click on the "Sign Up" button at the top
+              right corner and fill in the required details.
+            </p>
+          </div>
+          <div class="faq-item mb-6">
+            <h3 class="text-xl font-medium mb-2">How can I reset my password?</h3>
+            <p>
+              Click on the "Forgot Password" link on the login page and follow
+              the instructions to reset your password.
+            </p>
+          </div>
+          <div class="faq-item mb-6">
+            <h3 class="text-xl font-medium mb-2">
+              What payment methods do you accept?
+            </h3>
+            <p>
+              We accept various payment methods including credit/debit cards,
+              PayPal, and bank transfers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock body %}
+    
+    
+<script src="{%static 'website/script.js' %}"></script>
+{% block jsfile %}    
+
+{% endblock jsfile %}
+  
+
+  </body>
+</html>

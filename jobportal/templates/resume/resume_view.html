@@ -1,0 +1,26 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}
+  Resume Template selction
+{% endblock title %}
+{% block csslink %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/resume_view.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %}
+
+{% block body %}
+<div>
+  <form method="POST">
+    {% csrf_token %}
+    <label>Select Resume Template</label>
+    {{ form.template }}
+
+    <button type="submit">Preview Resume</button>
+</form>
+</div>
+{% endblock body %}
+
+
+

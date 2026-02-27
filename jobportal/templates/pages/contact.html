@@ -1,0 +1,90 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}
+  Contact Page
+{% endblock title %}
+{% block csslink %}
+<link rel="stylesheet" href="{%static 'css/style.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{%static 'css/contact.css' %}" />
+{% endblock csslink %}
+
+{% block body %}
+  <section class="contact-section">
+    <!-- <div class="reach-out-head">
+      <img src="{% static 'website/image/conatct-bg.jpg' %}" alt="Contact Background" class="contact-bg-image" />
+      <h2>We'd Love To Hear From You</h2>
+      <p>Feel free to reach out to us with any questions or feedback!</p>
+    </div> -->
+    <div class="reach-out-head" style="background-image: url('{% static 'images/conatct-bg.jpg' %}');">
+      <h2>We'd Love To Hear From You</h2>
+      <p>Feel free to reach out to us with any questions or feedback!</p>
+    </div>
+
+    <div class="reach-our-body">
+      <div>
+        <section class="contact-wrapper">
+        <h1>Contact our team</h1>
+        <p class="subtitle">
+          Got any questions about the product or scaling on our platform? We're here to help.
+          Chat to our friendly team 24/7 and get onboard in less than 5 minutes.
+        </p>
+
+        <div class="contact-container">
+          <!-- LEFT FORM -->
+          <form class="contact-form" action="{% url 'Pages:contact_mail' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div>
+                <label>First name</label>
+                <input type="text" placeholder="First name" name="First name">
+              </div>
+              <div>
+                <label>Last name</label>
+                <input type="text" placeholder="Last name" name="Last name">
+              </div>
+            </div>
+
+            <label>Email</label>
+            <input type="email" placeholder="you@company.com" name="Email">
+
+            <label>Phone number</label>
+            <input type="tel" placeholder="+1 (555) 000-0000" name="Phone number">
+
+            <label>Message</label>
+            <textarea placeholder="Leave us a message..." name="Message"></textarea>
+
+            <button class="review-message" type="submit">Send message</button>
+          </form>
+
+          <!-- RIGHT INFO -->
+          <div class="contact-info">
+
+            <div class="info-block">
+              <h3>Chat with us</h3>
+              <p>Speak to our friendly team via live chat.</p>
+              <a href="#">Start a live chat</a>
+              <a href="#">Shoot us an email</a>
+              <a href="#">Message us on X</a>
+            </div>
+
+            <div class="info-block">
+              <h3>Call us</h3>
+              <p>Call our team Mon-Fri from 8am to 5pm.</p>
+              <strong>+1 (555) 000-0000</strong>
+            </div>
+
+            <div class="info-block">
+              <h3>Visit us</h3>
+              <p>Chat to us in person at our Melbourne HQ.</p>
+              <strong>100 Smith Street, Collingwood VIC 3066</strong>
+            </div>
+
+          </div>
+        </div>
+        </section>
+      </div>
+    </div>
+  </section>
+{% endblock body %}
