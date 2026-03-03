@@ -1,11 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  hello
-</body>
-</html>
+{% extends "home.html" %}
+{% load static %}
+{% block content %}
+
+
+{% block csslink %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="{%static 'css/style.css' %}">
+{% endblock csslink %}
+
+{% block user_details %}
+<div class="flex justify-center p-2 text-lg font-medium bg-[#233851] text-[#FBC638]">
+  <h3>Welcome, {{ request.user.username }} 👋</h3>
+  <h3>Your Role now is Recuriter</h3>
+</div>
+{% endblock user_details %}
+      
+{% endblock %}
+
+{% block jsfile %}    
+  <script src="https://cdn.tailwindcss.com"></script>
+{% endblock jsfile %}

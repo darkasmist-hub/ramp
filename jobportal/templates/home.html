@@ -47,55 +47,100 @@
     <header class="bg-primary sticky top-0 z-50">
       <nav class="max-w-[1200px] mx-auto px-4">
         <div id="navbar" class="flex justify-between items-center h-[100px]">
-          <a href="{% url 'accounts:home' %}">
-            <img
-              class="w-[100px] md:w-[180px]"
-              src="{% static 'images/logo.png' %}"
-              alt="LOGO"
-            />
-          </a>
+
+          {% if user.profile.role == "seeker" %}
+            <a href="{% url 'accounts:seeker_dashboard' %}">
+              <img
+                class="w-[100px] md:w-[180px]"
+                src="{% static 'images/logo.png' %}"
+                alt="LOGO"
+              />
+            </a>
+          {% else %}
+            <a href="{% url 'accounts:provider_dashboard' %}">
+              <img
+                class="w-[100px] md:w-[180px]"
+                src="{% static 'images/logo.png' %}"
+                alt="LOGO"
+              />
+            </a>
+          {% endif %}
 
           <ul
             id="menu"
             class="hidden md:flex items-center list-none space-x-0 md:space-x-10 text-white font-medium text-[1.1rem]"
           >
-            <li>
-              <a href="{% url 'accounts:home' %}" class="hover:text-accent transition-colors"
-                >Home</a
-              >
-            </li>
+          
+          {% if user.profile.role == "seeker" %}
+          <li>
+            <a href="{% url 'accounts:seeker_dashboard' %}" class="hover:text-accent transition-colors"
+              >Home</a
+            >
+          </li>
+          {% else %}
+          <li>
+            <a href="{% url 'accounts:provider_dashboard' %}" class="hover:text-accent transition-colors"
+              >Home</a
+            >
+          </li>
+          {% endif %}
+                
+          
 
 
             <li class="relative group z-20">
+              {% if user.profile.role == "seeker" %}
               <a href="{% url 'jobs:job_list' %}" class="hover:text-accent transition-colors"
                 >Jobs</a
               >
+              {% else %}
+              <a href="{% url 'jobs:recruiter_dashboard' %}" class="hover:text-accent transition-colors"
+                >Jobs</a
+              >
+              {% endif %}
               <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg
                opacity-0 invisible group-hover:opacity-100 group-hover:visible
                transition-all duration-200">
-              <ul class="py-2 text-gray-700">
+               {% if user.profile.role == "seeker" %}
+                <ul class="py-2 text-gray-700">
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Software Jobs
+                  Save job
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Part Time Jobs
+                  Apply job
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Internships
+                  Track application status
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
                   Jobs for Women
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                   Jobs for Freshers
-                </li>
-                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
                   Night shift Jobs
                 </li>
+              </ul>
+                {% else %}
+                <ul class="py-2 text-gray-700">
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Remote Jobs
+                 <a href="{% url 'jobs:recruiter_dashboard' %}">
+                   Total jobs posted
+                 </a>
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  <a href="{% url 'jobs:create_job' %}">+ Post New Job</a>
+                </li>
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Expired jobs
+                </li>
+                {% comment %} <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  <a href="{% url 'jobs:view_applicants' job.id %}">View Applicants</a>
+                </li> {% endcomment %}
+                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                  Hiring analytics
                 </li>
               </ul>
+                {% endif %}
+              
             </div>
             </li>
 
@@ -107,28 +152,50 @@
               <div class="absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg
                opacity-0 invisible group-hover:opacity-100 group-hover:visible
                transition-all duration-200 z-50">
-              <ul class="py-2 text-gray-700">
-                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  <a href="{% url 'Pages:create_resume' %}">Resume Building</a>
-                </li>
-                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  <a href="{% url 'Pages:counselling' %}">
-                    Career counselling
-                  </a>
-                </li>
-                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                    <a href="{% url 'notifications:list' %}">Notification & Job Alerts</a>
-                </li>
-                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Skill assessment tests
-                </li>
-                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                   <a href="{% url 'Pages:history' %}">History</a>
-                </li>
-                <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                   <a href="{% url 'Pages:contact' %}">Contact Us</a>
-                </li>
-              </ul>
+               {% if user.profile.role == "seeker" %}
+                <ul class="py-2 text-gray-700">
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                    <a href="{% url 'Pages:create_resume' %}">Resume Building</a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                    <a href="{% url 'Pages:counselling' %}">
+                      Career counselling
+                    </a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                      <a href="{% url 'notifications:list' %}">Notification & Job Alerts</a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                      <a href="{% url 'Pages:Skill_Assessment' %}">Skill assessment tests </a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                    <a href="{% url 'Pages:history' %}">History</a>
+                  </li>
+
+                </ul>
+                {% else %}
+                <ul class="py-2 text-gray-700">
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                    <a href="{% url 'Pages:create_resume' %}">Resume Building</a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                    <a href="{% url 'Pages:counselling' %}">
+                      Schedule interview
+                    </a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                      <a href="{% url 'notifications:list' %}">Notification & Job Alerts</a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                      <a href="{% url 'Pages:Skill_Assessment' %}">View candidate profile</a>
+                  </li>
+                  <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
+                    <a href="{% url 'Pages:history' %}">Status updates</a>
+                  </li>
+
+                </ul>
+                {% endif %}
+
             </div>
             </li>
 
@@ -142,7 +209,7 @@
                transition-all duration-200 z-50">
               <ul class="py-2 text-gray-700">
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  support
+                  <a href="{% url 'Pages:contact' %}">Support</a>
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
                   Abc123@gmail.com
@@ -264,6 +331,10 @@
         </div>
       </nav>
     </header>
+
+
+{% block user_details %}
+{% endblock user_details %}
 
 {% block body %}
   <main>

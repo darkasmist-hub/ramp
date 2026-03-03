@@ -10,6 +10,8 @@ from .models import Contact as contactmodel
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .models import Contact
+from .models import SkillAssessment
 
 
 def services(request):
@@ -82,48 +84,35 @@ def download_resume(request, resume_id):
     pisa.CreatePDF(html, dest=response)
     return response
 
-# @login_required
-# def contact_mail(request):
-#     if request.method =="POST":
-#         firstname = request.POST.get('firstname')
-#         lastname = request.POST.get('lastname')
-#         Email = request.POST.get('email')
-#         Phone = request.POST.get('phone')
-#         message = request.POST.get('message')
-        
-#         contactmodel.objects.create(
-            
-#             Email=Email,
-#             user=request.user,  
-#             firstname=firstname,
-#             lastname=lastname,
-#             Phone=Phone,
-#             message=message,
-#         )
-#         subject = "Your message"
-#         message = f"{message}"
-#         from_email = "darkas.mist@gmail.com"
-        
-#         send_mail(subject, message, from_email, [Email],fail_silently=False)
-        
-#         return render(request, 'Pages/contact.html', {
-#             "status": "send_mail",
-#             "Email": Email
-#         })
-    
-#     return render(request, 'Pages/contact.html')
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
-from .models import Contact
+def skill_assessment(request):
+    score = None
+    if request.method == "POST":
+        answers = [
+            request.POST.get("q1"),
+            request.POST.get("q2"),
+            request.POST.get("q3"),
+        ]
+        SkillAssessment.objects.create(
+        user=request.user,
+        score=score
+    )
+
+        correct_answers = ["python", "django", "html"]
+
+        score = 0
+        for i in range(len(correct_answers)):
+            if answers[i] == correct_answers[i]:
+                score += 1
+
+    return render(request, "Pages/skill_assessment.html", {"score": score})
 
 @login_required
 def contact_mail(request):
     # Safety check
     print("VIEW HIT:", type(request), request.method) 
     if not hasattr(request, 'user') or not request.user.is_authenticated:
-        return redirect('login')  # change 'login' to your login URL name
+        return redirect('accounts:login')  # change 'login' to your login URL name
 
     if request.method == "POST":
         firstname = request.POST.get('First name', '').strip()
@@ -161,9 +150,23 @@ def contact_mail(request):
 
     return render(request, 'Pages/contact.html')
 
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
 @login_required
-def send_mail(request):
+def counselling(request):
     if request.method == "POST":
-        Email = request.POST.get('Email')
+        # You can save data in DB here
+        return render(request, "Pages/counselling.html", {
+            "success": True
+        })
+
+    return render(request, "Pages/counselling.html")
+
+# @login_required
+# def send_mail(request):
+#     if request.method == "POST":
+#         Email = request.POST.get('Email')
         
-        message = request.POST.get(message)
+#         message = request.POST.get(message)

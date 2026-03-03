@@ -47,3 +47,8 @@ class Contact(models.Model):
     Phone = models.CharField(max_length=10,validators=[MinLengthValidator(10)])
     message = models.CharField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
+    
+class SkillAssessment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)

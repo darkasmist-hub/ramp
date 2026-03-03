@@ -17,15 +17,15 @@
             <div class="job-title">{{ job.title }}</div>
             <div class="company-name">{{ job.company_name }}</div>
             <div class="salary">₹ {{ job.salary }}</div>
+            <div class="salary">{{ job.companyEmail }}</div>
 
             <div style="margin-top:15px;">
                 <span class="badge-custom">{{ job.job_type }}</span>
                 <span class="badge-custom">{{ job.location }}</span>
             </div>
 
-            <a href="" class="apply-btn">
-                Apply Now
-            </a>
+            <a href="{% url 'jobs:apply_job' job.id %}" class="apply-btn">Apply Now</a>
+            
         </div>
 
         <!-- HIGHLIGHTS -->

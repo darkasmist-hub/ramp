@@ -9,15 +9,17 @@
 {% endblock csslink %}
 
 
-
-
-
 {% block user_details %}
-<div class="container mt-4">
+  <div class="flex justify-center p-2 text-lg font-medium bg-[#233851] text-[#FBC638]">
+    <h3>Welcome, {{ request.user.username }} 👋</h3>
+    <h3>Your Role now is Job Seeker</h3>
+  </div>
+{% endblock user_details %}
   
+{% comment %} {% block user_details %}
+<div class="container mt-4 ">
   <h3>Welcome, {{ request.user.username }} 👋</h3>
   <hr>
-  <p>hello</p>
   <!-- Latest Jobs -->
   <h4>Latest Jobs</h4>
     <div class="row">
@@ -47,8 +49,11 @@
           <li class="list-group-item">You haven't applied to any job yet.</li>
           {% endfor %}
         </ul>
-        
       </div>
-{% endblock user_details %}
+{% endblock user_details %} {% endcomment %}
       
 {% endblock %}
+
+{% block jsfile %}    
+  <script src="https://cdn.tailwindcss.com"></script>
+{% endblock jsfile %}

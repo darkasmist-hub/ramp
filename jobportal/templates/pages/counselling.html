@@ -11,13 +11,93 @@
 
 
 {% block body %}
-  <div class="counselling">
-    <span class="flex">
-    <h2>counselling page</h2>
-      🛎️
-    </span>
-    <div>
-      
+  <div class="counselling-container">
+    <div class="container">
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1>Career Counselling & Guidance</h1>
+            <p class="text-muted">
+                Get expert advice on resume building, interview preparation, and career growth.
+            </p>
+        </div>
+
+        <!-- Services Section -->
+        <div class="section-card">
+            <h3>Our Counselling Services</h3>
+            <ul>
+                <li>✔ Resume Review & Optimization</li>
+                <li>✔ Mock Interviews</li>
+                <li>✔ Career Path Planning</li>
+                <li>✔ Skill Gap Analysis</li>
+                <li>✔ Job Switching Strategy</li>
+            </ul>
+        </div>
+
+        <!-- Why Choose Us -->
+        <div class="section-card">
+            <h3>Why Choose Our Experts?</h3>
+            <p>
+                Our professional counsellors help job seekers understand their strengths,
+                improve confidence, and land better opportunities faster.
+            </p>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="section-card">
+            <h3>Book a Counselling Session</h3>
+
+            <form method="post" action="{% url 'Pages:counselling' %}">
+                {% csrf_token %}
+
+                <div class="row mb-3 grid grid-cols-3 gap-4">
+                    <div class="col-md-6">
+                        <label>Full Name</label>
+                        <input type="text" name="fullname" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Phone Number</label>
+                        <input type="number" name="Phonenumber" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label>Preferred Counselling Type</label>
+                    <select name="session_type" class="form-control" required>
+                        <option value="">Select</option>
+                        <option>Resume Review</option>
+                        <option>Mock Interview</option>
+                        <option>Career Planning</option>
+                        <option>Skill Development</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Your Message</label>
+                    <textarea name="message" class="form-control" rows="2" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary-custom">
+                    Book Session
+                </button>
+            </form>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="section-card">
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Q:</strong> How long is each session?</p>
+            <p>A: Each counselling session lasts approximately 45-60 minutes.</p>
+
+            <p><strong>Q:</strong> Is it online?</p>
+            <p>A: Yes, sessions are conducted online via video call.</p>
+        </div>
+
     </div>
-  </div>
+</div>
+
 {% endblock body %}

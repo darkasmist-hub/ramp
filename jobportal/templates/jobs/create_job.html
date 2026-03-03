@@ -1,0 +1,38 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block csslink %}
+<link rel="stylesheet" href="{%static 'css/style.css' %}" />
+<link rel="stylesheet" href="{%static 'css/create_job.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %}
+
+{% block body %}
+<div class="job-form-container">
+    <h2>Post a New Job</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                <div style="color:red; font-size:13px;">
+                    {{ field.errors }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div style="text-align:center; margin-top:25px;">
+            <button type="submit" class="submit-btn">
+                Post Job
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}
+{% block jsfile %}    
+<script src="https://cdn.tailwindcss.com"></script>
+{% endblock jsfile %}

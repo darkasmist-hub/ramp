@@ -11,13 +11,41 @@
 
 
 {% block body %}
-  <div class="counselling">
-    <span class="flex">
-    <h2>Skill Assessment page</h2>
-      🛎️
-    </span>
-    <div>
-      
-    </div>
-  </div>
+  
+<div class="container">
+    <h2>Skill Assessment Test</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="question">
+            <p>1. Which language is used for backend development?</p>
+            <label><input type="radio" name="q1" value="python"> Python</label>
+            <label><input type="radio" name="q1" value="html"> HTML</label>
+            <label><input type="radio" name="q1" value="css"> CSS</label>
+        </div>
+
+        <div class="question">
+            <p>2. Which framework is used with Python for web development?</p>
+            <label><input type="radio" name="q2" value="django"> Django</label>
+            <label><input type="radio" name="q2" value="react"> React</label>
+            <label><input type="radio" name="q2" value="node"> Node</label>
+        </div>
+
+        <div class="question">
+            <p>3. Which is a markup language?</p>
+            <label><input type="radio" name="q3" value="html"> HTML</label>
+            <label><input type="radio" name="q3" value="python"> Python</label>
+            <label><input type="radio" name="q3" value="java"> Java</label>
+        </div>
+
+        <button type="submit">Submit Test</button>
+    </form>
+
+    {% if score is not None %}
+        <div class="result">
+            Your Score: {{ score }} / 3
+        </div>
+    {% endif %}
+</div>
 {% endblock body %}

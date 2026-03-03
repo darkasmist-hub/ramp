@@ -134,9 +134,9 @@ STATICFILES_DIRS =[
   BASE_DIR / 'static',
 ]
 
-LOGIN_URL = "accounts:login"
+LOGIN_URL = "accounts:user_login"
 LOGIN_REDIRECT_URL = "accounts:seeker_dashboard"
-LOGOUT_REDIRECT_URL = "accounts:login"
+LOGOUT_REDIRECT_URL = "accounts:user_login"
 
 SECRET_KEY = config("SECRET_KEY")
 
