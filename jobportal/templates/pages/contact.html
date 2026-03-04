@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{%static 'css/contact.css' %}" />
 {% endblock csslink %}
-
+<script src="//unpkg.com/alpinejs" defer></script>
 {% block body %}
   <section class="contact-section">
     <!-- <div class="reach-out-head">
@@ -17,6 +17,24 @@
       <h2>We'd Love To Hear From You</h2>
       <p>Feel free to reach out to us with any questions or feedback!</p>
     </div> -->
+ {% if messages %}
+<div class="fixed top-6 right-6 z-50 space-y-4 w-80">
+  {% for message in messages %}
+  <div class="notification flex items-start justify-between p-4 rounded-xl shadow-lg text-sm font-medium
+    {% if message.tags == 'success' %} bg-emerald-500 text-white
+    {% elif message.tags == 'error' %} bg-red-500 text-white
+    {% elif message.tags == 'warning' %} bg-yellow-400 text-black
+    {% else %} bg-blue-500 text-white {% endif %}">
+    
+    <span class="pr-4">{{ message }}</span>
+
+    <button class="close-notification text-lg font-bold leading-none hover:opacity-70 transition">
+      ✕
+    </button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
     <div class="reach-out-head" style="background-image: url('{% static 'images/conatct-bg.jpg' %}');">
       <h2>We'd Love To Hear From You</h2>
       <p>Feel free to reach out to us with any questions or feedback!</p>
@@ -88,3 +106,6 @@
     </div>
   </section>
 {% endblock body %}
+{% block jsfile %}    
+<script src="https://cdn.tailwindcss.com"></scrip>
+{% endblock jsfile %}

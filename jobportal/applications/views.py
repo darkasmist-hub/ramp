@@ -4,7 +4,9 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from jobs.models import Job
-from .models import Application
+from jobs.models import JobApplication
+from django.core.mail import send_mail
+from django.contrib import messages
 
 
 @login_required
@@ -16,21 +18,30 @@ def apply_job(request, job_id):
         return redirect("accounts:provider_dashboard")
 
     # Prevent duplicate applications
-    already_applied = Application.objects.filter(user=request.user, job=job).exists()
+    already_applied = JobApplication.objects.filter(applicant=request.user, job=job).exists()
     if already_applied:
         return redirect("jobs:job_detail", job_id=job.id)
+    
+    send_mail(
+        subject=f"New Application for {job.title}",
+        message=f"A user applied for {job.title}",
+        from_email="darkas.mist@gmail.com",
+        recipient_list=[job.companyEmail],
+        fail_silently=False,
+    )
 
     if request.method == "POST":
         cover_letter = request.POST.get("cover_letter")
         resume = request.FILES.get("resume")
 
-        Application.objects.create(
-            user=request.user,
+        JobApplication.objects.create(
             job=job,
-            cover_letter=cover_letter,
+            applicant=request.user,
             resume=resume,
         )
 
-        return redirect("accounts:seeker_dashboard")
+        return redirect("job_list")
+    messages.success(request, "Your Application has been sent to HR, keep track of your Application")
+    
 
-    return render(request, "applications/apply_job.html", {"job": job})
+    return render(request, "jobs/job_detail.html", {"job": job})

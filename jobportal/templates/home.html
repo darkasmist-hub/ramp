@@ -40,6 +40,30 @@
         },
       };
     </script>
+    <script>
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("close-notification")) {
+        const notification = e.target.closest(".notification");
+
+        notification.style.transition = "all 0.3s ease";
+        notification.style.opacity = "0";
+        notification.style.transform = "translateX(20px)";
+
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(() => {
+        document.querySelectorAll(".notification").forEach(el => {
+            el.remove();
+        });
+    }, 4000);
+});
+</script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
   </head>

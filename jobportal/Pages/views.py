@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Contact
+from django.contrib import messages
 from .models import SkillAssessment
 
 
@@ -142,6 +143,8 @@ def contact_mail(request):
         from_email = "darkas.mist@gmail.com"
 
         send_mail(subject, email_body, from_email, [Email], fail_silently=False)
+        
+        messages.success(request, "Your message has been sent successfully!")
 
         return render(request, 'Pages/contact.html', {
             "status": "send_mail",

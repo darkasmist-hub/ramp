@@ -41,11 +41,25 @@ class Job(models.Model):
         return self.title
     
 class JobApplication(models.Model):
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="applications")
+
+    STATUS_CHOICES = [
+        ("applied", "Applied"),
+        ("reviewing", "Under Review"),
+        ("shortlisted", "Shortlisted"),
+        ("rejected", "Rejected"),
+        ("hired", "Hired"),
+    ]
+
+    job = models.ForeignKey("Job", on_delete=models.CASCADE,related_name="applications")
     applicant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     resume = models.FileField(upload_to="resumes/")
-    cover_letter = models.TextField(blank=True, null=True)
     applied_at = models.DateTimeField(auto_now_add=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="applied"
+    )
 
     def __str__(self):
         return f"{self.applicant.username} - {self.job.title}"

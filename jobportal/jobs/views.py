@@ -1,13 +1,15 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render,get_object_or_404,redirect
 from .models import Job,JobApplication
-from applications.models import Application
+from jobs.models import JobApplication
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import JobForm
 from django.utils import timezone
+from django.contrib import messages
 from django.http import HttpResponseForbidden
+
 # from .models import Requirnment
 
 def job_list(request):
@@ -30,28 +32,30 @@ def job_detail(request, id):
     return render(request, 'jobs/job_detail.html', {'job': job,'similar_jobs': similar_jobs})
 
 
-@login_required
-def apply_job(request, job_id):
-    job = get_object_or_404(Job, id=job_id)
+# @login_required
+# def apply_job(request, job_id):
+#     job = get_object_or_404(Job, id=job_id)
 
-    send_mail(
-        subject=f"New Application for {job.title}",
-        message=f"A user applied for {job.title}",
-        from_email="darkas.mist@gmail.com",
-        recipient_list={job.companyEmail},
-        fail_silently=False,
-    )
+#     send_mail(
+#         subject=f"New Application for {job.title}",
+#         message=f"A user applied for {job.title}",
+#         from_email="darkas.mist@gmail.com",
+#         recipient_list={job.companyEmail},
+#         fail_silently=False,
+#     )
     
-    if request.method == "POST":
-        resume = request.FILES.get("resume")
-        JobApplication.objects.create(
-            job=job,
-            applicant=request.user,
-            resume=resume,
-        )
-        return redirect("job_list")
+#     if request.method == "POST":
+#         resume = request.FILES.get("resume")
+#         JobApplication.objects.create(
+#             job=job,
+#             applicant=request.user,
+#             resume=resume,
+#         )
+#         return redirect("job_list")
     
-    return render(request, "jobs/job_detail.html", {"job": job})
+#     messages.success(request, "Your Application has been sent to HR, keep track of your Application")
+    
+#     return render(request, "jobs/job_detail.html", {"job": job})
 
 @login_required
 def recruiter_dashboard(request):
@@ -86,6 +90,16 @@ def create_job(request):
 
     return render(request, "jobs/create_job.html", {"form": form})
 
+@login_required
+def update_application_status(request, app_id, new_status):
+    application = get_object_or_404(JobApplication, id=app_id)
+
+    # Security: Only job owner can update
+    if request.user == application.job.employer:
+        application.status = new_status
+        application.save()
+
+    return redirect("jobs:recruiter_dashboard") 
 
 def view_applicants(request, job_id):
     job = get_object_or_404(Job, id=job_id, employer=request.user)

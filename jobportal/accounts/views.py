@@ -18,7 +18,7 @@ from jobs.models import Job
 from django.contrib.auth import authenticate
 from django.urls import reverse
 from django.contrib import messages
-from applications.models import Application
+from jobs.models import JobApplication
 
 def sign(request):
     if request.method == "POST":

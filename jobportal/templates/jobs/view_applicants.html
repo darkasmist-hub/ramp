@@ -8,6 +8,7 @@
 {% endblock csslink %}
 
 {% block body %}
+
 <h2>Applicants for {{ job.title }}</h2>
 
 <table border="1" cellpadding="10">
@@ -20,13 +21,20 @@
     {% for app in applications %}
     <tr>
         <td>{{ app.applicant.username }}</td>
+
         <td>
+            {% if app.resume %}
             <a href="{{ app.resume.url }}" target="_blank">
                 View Resume
             </a>
+            {% else %}
+            No Resume
+            {% endif %}
         </td>
+
         <td>{{ app.applied_at }}</td>
     </tr>
+
     {% empty %}
     <tr>
         <td colspan="3">No applicants yet.</td>
