@@ -65,6 +65,10 @@ def apply_job(request, job_id):
     if already_applied:
         messages.warning(request, "You already applied for this job")
         return redirect("jobs:job_detail", job_id=job.id)
+    
+    if job.status == "closed":
+        messages.warning(request, "This job is no longer accepting applications")
+        return redirect("jobs:job_detail", job_id=job.id)
 
     if request.method == "POST":
         form = JobApplicationForm(request.POST, request.FILES)

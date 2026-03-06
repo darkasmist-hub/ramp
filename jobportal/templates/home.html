@@ -128,13 +128,15 @@ document.addEventListener("DOMContentLoaded", function() {
                {% if user.profile.role == "seeker" %}
                 <ul class="py-2 text-gray-700">
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Save job
+                  <a href="{% url 'jobs:saved_jobs' %}">
+Saved Jobs
+</a>
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Apply job
+                  Applied job
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Track application status
+                  <a href="{% url 'jobs:Jobseeker_dashboard' %}">Track application status</a>
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
                   Jobs for Women

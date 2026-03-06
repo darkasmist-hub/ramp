@@ -2,47 +2,80 @@
 {% load static %}
 
 {% block csslink %}
-<link rel="stylesheet" href="{%static 'css/style.css' %}" />
-<link rel="stylesheet" href="{%static 'css/applicant.css' %}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" href="{% static 'css/applicant.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
 {% endblock csslink %}
 
 {% block body %}
 
-<h2>Applicants for {{ job.title }}</h2>
+<div class="applicants-container">
+    <a class="history-btn-back" href="{% url 'jobs:recruiter_dashboard' %}">← Back to Dashboard</a>
+    <h2 class="page-title">
+        <i class="fa-solid fa-users"></i>
+        Applicants for {{ job.title }}
+    </h2>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>Name</th>
-        <th>Resume</th>
-        <th>Applied On</th>
-    </tr>
+    <div class="table-wrapper">
+        <table class="applicants-table">
 
-    {% for app in applications %}
-    <tr>
-        <td>{{ app.applicant.username }}</td>
+            <thead>
+                <tr>
+                    <th>Applicant</th>
+                    <th>Resume</th>
+                    <th>Applied On</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-        <td>
-            {% if app.resume %}
-            <a href="{{ app.resume.url }}" target="_blank">
-                View Resume
-            </a>
-            {% else %}
-            No Resume
-            {% endif %}
-        </td>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td class="applicant-name">
+                        <i class="fa-solid fa-user"></i>
+                        {{ app.applicant.username }}
+                    </td>
+                    <td>
+                        {% if app.resume %}
+                        <a href="{{ app.resume.url }}" target="_blank" class="resume-btn">
+                            <i class="fa-solid fa-file"></i> View Resume
+                        </a>
+                        {% else %}
+                        <span class="no-resume">No Resume</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ app.applied_at|date:"M d, Y" }}
+                    </td>
+                    <td>
+                        <span class="status-badge status-{{ app.status }}">
+                            {{ app.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="actions">
+                        <a href="{% url 'jobs:update_application_status' app.id 'review' %}" class="btn review">
+                            Review
+                        </a>
+                        <a href="{% url 'jobs:update_application_status' app.id 'shortlisted' %}" class="btn shortlist">
+                            Shortlist
+                        </a>
+                        <a href="{% url 'jobs:update_application_status' app.id 'rejected' %}" class="btn reject">
+                            Reject
+                        </a>
+                    </td>
+                </tr>
 
-        <td>{{ app.applied_at }}</td>
-    </tr>
-
-    {% empty %}
-    <tr>
-        <td colspan="3">No applicants yet.</td>
-    </tr>
-    {% endfor %}
-</table>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="no-data">
+                        No applicants yet.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
 {% endblock body %}
-{% block jsfile %}    
-<script src="https://cdn.tailwindcss.com"></script>
-{% endblock jsfile %}

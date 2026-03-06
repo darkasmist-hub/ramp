@@ -1,0 +1,102 @@
+.applicants-container{
+    max-width:1100px;
+    margin:40px auto;
+    padding:20px;
+}
+
+.page-title{
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+.table-wrapper{
+    background:white;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    overflow:hidden;
+}
+
+.applicants-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.applicants-table th{
+    background:#f5f6fa;
+    text-align:left;
+    padding:14px;
+    font-weight:600;
+}
+
+.applicants-table td{
+    padding:14px;
+    border-top:1px solid #eee;
+}
+
+.applicant-name{
+    font-weight:500;
+}
+
+.resume-btn{
+    color:#007bff;
+    text-decoration:none;
+}
+
+.resume-btn:hover{
+    text-decoration:underline;
+}
+
+.no-resume{
+    color:#888;
+}
+
+.actions .btn{
+    padding:6px 12px;
+    border-radius:6px;
+    font-size:13px;
+    text-decoration:none;
+    margin-right:6px;
+}
+
+.btn.review{
+    background:#ffc107;
+    color:black;
+}
+
+.btn.shortlist{
+    background:#28a745;
+    color:white;
+}
+
+.btn.reject{
+    background:#dc3545;
+    color:white;
+}
+
+.status-badge{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.status-applied{
+    background:#e3f2fd;
+}
+
+.status-review{
+    background:#fff3cd;
+}
+
+.status-shortlisted{
+    background:#d4edda;
+}
+
+.status-rejected{
+    background:#f8d7da;
+}
+
+.no-data{
+    text-align:center;
+    padding:20px;
+}

@@ -33,6 +33,12 @@ class Job(models.Model):
     shift = models.CharField(max_length=50)
     expires_at = models.DateField(null=True, blank=True)
     
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default="open"
+    )
+    
     def is_expired(self):
         return self.expires_at and self.expires_at < timezone.now()
 
@@ -69,6 +75,24 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return f"{self.applicant.username} - {self.job.title}"
+    
+class SavedJob(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="saved_jobs"
+    )
+    job = models.ForeignKey(
+        Job,
+        on_delete=models.CASCADE,
+        related_name="saved_by"
+    )
+    saved_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        unique_together = ("user", "job")
+
+    def __str__(self):
+        return f"{self.user.username} saved {self.job.title}"
 # class Requirnment(models.Model):
 #     experience = models.CharField(max_length=100)
 #     education= models.CharField(max_length=200)

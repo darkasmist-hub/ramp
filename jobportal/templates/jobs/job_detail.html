@@ -44,7 +44,13 @@
             {% if user.profile.role == "seeker" %}
             <a href="{% url 'applications:apply_job' job.id %}" class="apply-btn">Apply Now</a>
             {% else %}
-            <button class="apply-btn">LOL you are recurtier</button>
+            <div class="flex justify-evenly">
+                <button class="apply-btn">
+                    <a href="{% url 'jobs:close_job' job.id %}" class="btn btn-warning">
+                        <i class="fa-solid fa-lock"></i> LOL you are recurtier Close Job
+                    </a>
+                </button>
+            </div>
             {% endif %}
             
         </div>

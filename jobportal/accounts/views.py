@@ -182,15 +182,14 @@ def dashboard(request):
 
 @login_required
 def seeker_dashboard(request):
-    # if request.user.profile.role != "seeker":
-    #     return redirect("accounts:provider_dashboard")
 
-    # latest_jobs = Job.objects.all().order_by('-created_at')[:6]
-    # applied_jobs = Application.objects.filter(user=request.user)
+    # applications = JobApplication.objects.filter(applicant=request.user)
 
     # context = {
-    #     "latest_jobs": latest_jobs,
-    #     "applied_jobs": applied_jobs,
+    #     "applied": applications.filter(status="applied"),
+    #     "review": applications.filter(status="review"),
+    #     "shortlisted": applications.filter(status="shortlisted"),
+    #     "rejected": applications.filter(status="rejected"),
     # }
 
     return render(request, "accounts/seeker_dashboard.html",)

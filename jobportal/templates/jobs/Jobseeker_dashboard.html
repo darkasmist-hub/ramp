@@ -1,0 +1,107 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block csslink %}
+<link rel="stylesheet" href="{%static 'css/style.css' %}" />
+<link rel="stylesheet" href="{%static 'css/Jobseeker_dashboard.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+{% endblock csslink %}
+
+{% block body %}
+
+<div class="dashboard-container">
+
+<h2 class="dashboard-title">
+<i class="fa-solid fa-briefcase"></i> My Applications
+</h2>
+
+<!-- Review -->
+<div class="application-section">
+<h3 class="section-title review">
+<i class="fa-solid fa-eye"></i> Under Review
+</h3>
+
+<div class="job-grid">
+{% for app in review %}
+<div class="job-card">
+
+<div class="job-title">{{ app.job.title }}</div>
+<div class="job-company">{{ app.job.company_name }}</div>
+
+<div class="status-badge review">
+{{ app.status }}
+</div>
+
+<div class="job-date">
+Applied on {{ app.applied_at|date:"M d, Y" }}
+</div>
+
+</div>
+{% empty %}
+<p class="empty">No jobs under review</p>
+{% endfor %}
+</div>
+</div>
+
+<!-- Shortlisted -->
+<div class="application-section">
+<h3 class="section-title shortlisted">
+<i class="fa-solid fa-star"></i> Shortlisted
+</h3>
+
+<div class="job-grid">
+{% for app in shortlisted %}
+<div class="job-card">
+
+<div class="job-title">{{ app.job.title }}</div>
+<div class="job-company">{{ app.job.company_name }}</div>
+
+<div class="status-badge shortlisted">
+{{ app.status }}
+</div>
+
+<div class="job-date">
+Applied on {{ app.applied_at|date:"M d, Y" }}
+</div>
+
+</div>
+{% empty %}
+<p class="empty">No shortlisted jobs</p>
+{% endfor %}
+</div>
+</div>
+
+<!-- Rejected -->
+<div class="application-section">
+<h3 class="section-title rejected">
+<i class="fa-solid fa-xmark"></i> Rejected
+</h3>
+
+<div class="job-grid">
+{% for app in rejected %}
+<div class="job-card">
+
+<div class="job-title">{{ app.job.title }}</div>
+<div class="job-company">{{ app.job.company_name }}</div>
+
+<div class="status-badge rejected">
+{{ app.status }}
+</div>
+
+<div class="job-date">
+Applied on {{ app.applied_at|date:"M d, Y" }}
+</div>
+
+</div>
+{% empty %}
+<p class="empty">No rejected jobs</p>
+{% endfor %}
+</div>
+</div>
+
+</div>
+
+{% endblock body %}
+{% block jsfile %}    
+<script src="https://cdn.tailwindcss.com"></script>
+{% endblock jsfile %}

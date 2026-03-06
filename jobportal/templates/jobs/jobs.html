@@ -140,30 +140,59 @@
 
       <div class="all-jobs">
         {% for job in jobs %}
-              <div class="joblist"
-                  data-job="{{ job.location }}"
-                  data-type="{{ job.job_type }}"
-                  data-salary="{{ job.salary }}"
-                  data-station="{{ job.station }}">
+        <div class="bg-white rounded-2xl shadow-md p-4 w-[43%] flex gap-4 items-center"
+                    data-job="{{ job.location }}"
+                    data-type="{{ job.job_type }}"
+                    data-salary="{{ job.salary }}"
+                    data-station="{{ job.station }}">
+              <!-- Image -->
+              <div class="relative">
+                  <img src="{% static 'images/logo.png' %}"
+                  class="w-44 h-32 object-cover rounded-xl">
 
-                <div class="flex">
-                  <div class="company-image-name">
-                    <img src="{% static 'images/logo.png' %}" alt="logo" height="150" width="150"/>
-                    <span>{{ job.company_name }}</span>
-                  </div>
-                  
-                  <div class="company-details">
-                    <h3>{{ job.title }}</h3>
-                    <p>{{ job.salary }}</p>
-                    <span>{{ job.job_type }}</span>
-                    <div>{{ job.location }}</div>
-                    <span>{{ job.station }}</span>
-                  </div>
-                </div>
-                  <div class="Apply-button">
-                    <a href="{% url 'jobs:job_detail' job.id %}" class="Apply-btn">Apply For This Job</a>
-                  </div>
+                  <span class="flex justify-evenly">
+                  {{ job.company_name }}
+                  </span>
+                 {% if job.id in saved_jobs %}
+                  <a href="{% url 'jobs:unsave_job' job.id %}"
+                  class="absolute top-2 right-2 bg-white p-2 rounded-full shadow text-red-500">
+                  <i class="fa-solid fa-heart"></i>
+                  </a>
+                  {% else %}
+                  <a href="{% url 'jobs:save_job' job.id %}"
+                  class="absolute top-2 right-2 bg-white p-2 rounded-full shadow text-gray-400">
+                  <i class="fa-regular fa-heart"></i>
+                  </a>
+                {% endif %}
               </div>
+
+              <div class="flex-1 w-200">
+                <div class="flex items-center gap-3">
+                    {% if job.status == "closed" %}
+                      <span class="badge bg-danger">Closed</span>
+                    {% endif %}
+                    <h2 class="text-xl font-bold">{{ job.salary }}</h2>
+                </div>
+
+                <p class="text-black-500 text-sm mt-1 font-semibold">
+                    {{ job.title }}
+                </p>
+                <div class="flex gap-6 text-gray-500 text-sm mt-3">
+                    <span>{{ job.job_type }}</span>
+                    <span>{{ job.station }}</span>
+                </div>
+                <p class="text-gray-700 mt-3 text-sm">
+                  {{ job.location }}
+                </p>
+                <div class="flex items-center gap-2 mt-3">
+                    <img src="https://i.pravatar.cc/40" class="w-7 h-7 rounded-full">
+                  <div class="Apply-button">
+                        <a href="{% url 'jobs:job_detail' job.id %}" class="Apply-btn">Apply For This Job</a>
+                      </div>
+                </div>
+              </div>
+
+        </div>
       {% endfor %}
       </div>
       <div class="pagination">
