@@ -14,6 +14,10 @@ class Job(models.Model):
         null=True,        # 👈 IMPORTANT
         blank=True  
     )
+    STATUS_CHOICES = (
+        ("open", "Open"),
+        ("closed", "Closed"),
+    )
     title = models.CharField(max_length=200)
     company_name = models.CharField(max_length=200)
     location = models.CharField(max_length=100)
@@ -49,11 +53,13 @@ class JobApplication(models.Model):
         ("rejected", "Rejected"),
         ("hired", "Hired"),
     ]
+    
 
     job = models.ForeignKey("Job", on_delete=models.CASCADE,related_name="applications")
     applicant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     resume = models.FileField(upload_to="resumes/")
     applied_at = models.DateTimeField(auto_now_add=True)
+    cover_letter = models.TextField(blank=True, null=True)
 
     status = models.CharField(
         max_length=20,

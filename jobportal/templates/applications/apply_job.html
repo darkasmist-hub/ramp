@@ -1,29 +1,44 @@
-{% extends "base.html" %}
-{% block content %}
-
+{% extends "home.html" %} 
+{% load static %} 
+{% block content %} 
 {% block csslink %}
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+  integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<link rel="stylesheet" href="{%static 'css/apply_job.css' %}" />
 {% endblock csslink %}
 
-<div class="container mt-5">
-    <h3>Apply for {{ job.title }}</h3>
-    <hr>
-
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <div class="mb-3">
+{% block body %}
+<div class="apply-section">
+    <div class="apply-card">
+        <div class="apply-header">
+            <h2><i class="fa-solid fa-paper-plane"></i> Apply for {{ job.title }}</h2>
+            <p>Submit your application for this job opportunity</p>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
             <label>Cover Letter</label>
-            <textarea name="cover_letter" class="form-control" rows="5"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label>Upload Resume</label>
-            <input type="file" name="resume" class="form-control">
-        </div>
-
-        <button type="submit" class="btn btn-success">Submit Application</button>
-    </form>
+            <textarea
+                name="cover_letter"
+                rows="6"
+                placeholder="Write a short cover letter..."
+            ></textarea>
+            </div>
+            <div class="form-group">
+            <label>Upload Resume</label> <input type="file" name="resume" />
+            </div>
+            <button type="submit" class="apply-btn">
+            <i class="fa-solid fa-paper-plane"></i> Submit Application
+            </button>
+        </form>
+    </div>
 </div>
 
+
+{% endblock body %} 
 {% endblock %}

@@ -41,8 +41,11 @@
                 <span class="badge-custom">{{ job.job_type }}</span>
                 <span class="badge-custom">{{ job.location }}</span>
             </div>
-
-            <a href="{% url 'jobs:apply_job' job.id %}" class="apply-btn">Apply Now</a>
+            {% if user.profile.role == "seeker" %}
+            <a href="{% url 'applications:apply_job' job.id %}" class="apply-btn">Apply Now</a>
+            {% else %}
+            <button class="apply-btn">LOL you are recurtier</button>
+            {% endif %}
             
         </div>
 

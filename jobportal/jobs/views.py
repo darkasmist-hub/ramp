@@ -31,32 +31,6 @@ def job_detail(request, id):
     ).exclude(id=job.id)[:5]
     return render(request, 'jobs/job_detail.html', {'job': job,'similar_jobs': similar_jobs})
 
-
-# @login_required
-# def apply_job(request, job_id):
-#     job = get_object_or_404(Job, id=job_id)
-
-#     send_mail(
-#         subject=f"New Application for {job.title}",
-#         message=f"A user applied for {job.title}",
-#         from_email="darkas.mist@gmail.com",
-#         recipient_list={job.companyEmail},
-#         fail_silently=False,
-#     )
-    
-#     if request.method == "POST":
-#         resume = request.FILES.get("resume")
-#         JobApplication.objects.create(
-#             job=job,
-#             applicant=request.user,
-#             resume=resume,
-#         )
-#         return redirect("job_list")
-    
-#     messages.success(request, "Your Application has been sent to HR, keep track of your Application")
-    
-#     return render(request, "jobs/job_detail.html", {"job": job})
-
 @login_required
 def recruiter_dashboard(request):
     jobs = Job.objects.filter(employer=request.user)
@@ -109,3 +83,14 @@ def view_applicants(request, job_id):
         "job": job,
         "applications": applications
     })
+    
+@login_required
+def delete_job(request, job_id):
+
+    job = get_object_or_404(Job, id=job_id, employer=request.user)
+
+    job.delete()
+
+    messages.success(request, "Job deleted successfully.")
+
+    return redirect("jobs:recruiter_dashboard")
