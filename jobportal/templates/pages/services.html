@@ -26,6 +26,7 @@
     </header>
 
     <!-- ===== SERVICES SECTION ===== -->
+    {% if user.profile.role == "seeker" %}  
     <section class="services-container">
 
         <!-- Skill Assessment -->
@@ -59,7 +60,7 @@
       </a>
 
         <!-- Notifications -->
-        {% comment %} <a href="{% url 'notifications:Notification' %}"> {% endcomment %}
+        <a href="{% url 'notifications:notifications' %}">
           <div class="service-card-section">
             <img src="{% static 'images/notification.png' %}" alt="career">
             <span>
@@ -104,6 +105,87 @@
         </a>
 
     </section>
+    {% else %}
+    <section class="services-container">
+
+        <!-- Skill Assessment -->
+        
+        <a href="{% url 'Pages:schedule_interview' %}">
+          <div class="service-card-section">
+            <img src="{% static 'images/skill_ass.jpg' %}" alt="career">
+            <span>
+              <h2>Schedule interview</h2>
+              <p>
+                Evaluate your technical and professional skills with curated
+                assessments designed to match industry standards.
+              </p>
+            </span>
+          </div>
+      </a>
+
+        <!-- History -->
+        <a href="{% url 'Pages:candidate' %}">
+          <div class="service-card-section">
+            <img src="{% static 'images/history.png' %}" alt="career">
+            <span>
+
+              <h2>View Profile</h2>
+              <p>
+                Track your job applications, viewed jobs, saved jobs, and past
+                activity all in one place.
+              </p>
+            </span>
+          </div>
+      </a>
+
+        <!-- Notifications -->
+        <a href="{% url 'notifications:notifications' %}">
+          <div class="service-card-section">
+            <img src="{% static 'images/notification.png' %}" alt="career">
+            <span>
+
+              <h2>Notifications & Job Alerts</h2>
+              <p>
+                Get real-time notifications for new job postings, application
+                status updates, and employer responses.
+              </p>
+            </span>
+          </div>
+        {% comment %} </a> {% endcomment %}
+
+        <!-- Career Counselling -->
+        <a href="{% url 'Pages:Add_assessment' %}">
+          <div class="service-card-section">
+            <img src="{% static 'images/career.png' %}" alt="career">
+            <span>
+
+              <h2>Add Assessment</h2>
+              <p>
+                Get expert guidance to choose the right career path, improve
+                your resume, and prepare for interviews.
+              </p>
+            </span>
+          </div>
+      </a>
+
+        <!-- Contact -->
+        <a href="{% url 'Pages:contact' %}">
+          <div class="service-card-section">
+            <img src="{% static 'images/contact.jpg' %}" alt="contact">
+            <span>
+              
+              <h2>Contact Us</h2>
+              <p>
+                Have questions or need help? Reach out to our support team for
+                quick assistance and guidance.
+              </p>
+            </span>
+          </div>
+        </a>
+
+    </section>
+
+    {% endif %}
 
     <!-- ===== FOOTER ===== -->
     <footer class="footer">

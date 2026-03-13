@@ -33,3 +33,21 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+        
+        
+class CandidateProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=200)
+    age = models.IntegerField()
+    dob = models.DateField()
+    mobile = models.CharField(max_length=15)
+    profile_pic = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+    job_preference = models.CharField(max_length=200)
+    skills = models.TextField(help_text="Example: Python, Django, HTML")
+    bio = models.TextField()
+    resume = models.FileField(upload_to='resumes/')
+    location = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.full_name

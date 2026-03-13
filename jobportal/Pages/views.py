@@ -13,10 +13,18 @@ from django.contrib.auth.models import User
 from .models import Contact
 from django.contrib import messages
 from .models import SkillAssessment
+from jobs.models import JobApplication
+from notifications.models import Interview, Notification
 
 
+# def services(request):
+#   return render(request, 'pages/services.html')
 def services(request):
-  return render(request, 'pages/services.html')
+    applications = JobApplication.objects.all()
+
+    return render(request, "Pages/services.html", {
+        "applications": applications
+    })
 
 def counselling(request):
   return render(request, 'Pages/counselling.html')
@@ -98,9 +106,7 @@ def skill_assessment(request):
         user=request.user,
         score=score
     )
-
         correct_answers = ["python", "django", "html"]
-
         score = 0
         for i in range(len(correct_answers)):
             if answers[i] == correct_answers[i]:
@@ -154,8 +160,41 @@ def contact_mail(request):
     return render(request, 'Pages/contact.html')
 
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+@login_required
+def schedule_interview(request):
+    applications = JobApplication.objects.filter(
+        job__employer=request.user,
+        status="shortlisted"
+    )
+    if request.method == "POST":
+        application_id = request.POST.get("candidate")
+        date = request.POST.get("date")
+        time = request.POST.get("time")
+        mode = request.POST.get("mode")
+        meeting_link = request.POST.get("meeting_link")
+        notes = request.POST.get("notes")
+        application = JobApplication.objects.get(id=application_id)
+
+        # Create interview
+        Interview.objects.create(
+            application=application,
+            date=date,
+            time=time,
+            mode=mode,
+            meeting_link=meeting_link,
+            notes=notes
+        )
+         # Create notification for candidate
+        Notification.objects.create(
+            user=application.applicant,
+           message = f"You have an interview scheduled for {application.job.title} Date: {date} Time: {time} {meeting_link} {notes}"
+        )
+
+        return redirect("jobs:recruiter_dashboard")
+
+    return render(request, "Pages/schedule_interview.html", {
+        "applications": applications
+    })
 
 @login_required
 def counselling(request):
@@ -167,9 +206,46 @@ def counselling(request):
 
     return render(request, "Pages/counselling.html")
 
-# @login_required
-# def send_mail(request):
-#     if request.method == "POST":
-#         Email = request.POST.get('Email')
+@login_required
+def candidate(request):
+    applications = JobApplication.objects.all()
+
+    return render(request, "Pages/profile_list.html", {
+        "applications": applications
+    })
+
+@login_required
+def candidate_profile(request, application_id):
+    applications = JobApplication.objects.all()
+    application = JobApplication.objects.get(id=application_id)
+
+    return render(request, "Pages/candidate_profile.html", {
+        "application": application,
+        "applications":applications
+    })
+
+@login_required
+def Add_assessment(request):
+    return render(request, "Pages/Add_assessment.html")
+
+def send_mail_view(request):
+    applications = JobApplication.objects.all()
+    if request.method == "POST":
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
         
-#         message = request.POST.get(message)
+        if not email or not subject or not message:
+            messages.error(request, "All fields are required.")
+            return redirect("Pages:candidate")
+
+        send_mail(
+            subject,
+            message,
+            "darkas.mist@gmail.com",
+            [email],
+            fail_silently=False
+        )
+        messages.success(request, "Message sent successfully!")
+
+    return redirect("Pages:candidate")

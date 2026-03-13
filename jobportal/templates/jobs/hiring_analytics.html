@@ -1,0 +1,102 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="container mx-auto mt-10 px-6">
+
+    <h1 class="text-3xl font-bold mb-8">Hiring Analytics</h1>
+
+    <!-- Analytics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+        <!-- Total Jobs -->
+        <div class="bg-white shadow-lg rounded-xl p-6">
+            <h3 class="text-gray-500">Total Jobs</h3>
+            <p class="text-3xl font-bold mt-2">{{ total_jobs }}</p>
+        </div>
+
+        <!-- Active Jobs -->
+        <div class="bg-white shadow-lg rounded-xl p-6">
+            <h3 class="text-gray-500">Active Jobs</h3>
+            <p class="text-3xl font-bold text-green-600 mt-2">
+                {{ active_jobs }}
+            </p>
+        </div>
+
+        <!-- Expired Jobs -->
+        <div class="bg-white shadow-lg rounded-xl p-6">
+            <h3 class="text-gray-500">Expired Jobs</h3>
+            <p class="text-3xl font-bold text-red-600 mt-2">
+                {{ expired_jobs }}
+            </p>
+        </div>
+
+        <!-- Total Applications -->
+        <div class="bg-white shadow-lg rounded-xl p-6">
+            <h3 class="text-gray-500">Applications</h3>
+            <p class="text-3xl font-bold text-blue-600 mt-2">
+                {{ total_applications }}
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- Job Table -->
+    <div class="mt-12 bg-white shadow-lg rounded-xl p-6">
+
+        <h2 class="text-xl font-bold mb-4">Recent Jobs</h2>
+
+        <table class="w-full text-left border-collapse">
+
+            <thead>
+                <tr class="border-b">
+                    <th class="py-3">Job Title</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Applications</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for job in jobs %}
+            <tr class="border-b hover:bg-gray-50">
+
+                <td class="py-3 font-medium">
+                    {{ job.title }}
+                </td>
+
+                <td>{{ job.location }}</td>
+
+                <td>
+
+                    {% if job.status == "open" %}
+                        <span class="text-green-600 font-semibold">
+                            Active
+                        </span>
+                    {% else %}
+                        <span class="text-red-600 font-semibold">
+                            Closed
+                        </span>
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {{ job.applications.count }}
+                </td>
+
+            </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock body %}

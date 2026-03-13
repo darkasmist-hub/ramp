@@ -1,8 +1,5 @@
 from django.contrib.auth import login
 from django.shortcuts import get_object_or_404, render, HttpResponse, redirect
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
-# from .models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 import random
@@ -19,6 +16,7 @@ from django.contrib.auth import authenticate
 from django.urls import reverse
 from django.contrib import messages
 from jobs.models import JobApplication
+from .models import CandidateProfile
 
 def sign(request):
     if request.method == "POST":
@@ -204,8 +202,20 @@ def user_logout(request):
 
 
 
-  
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
+def create_profile(request):
+
+    if request.method == "POST":
+
+        profile = CandidateProfile.objects.create(
+            user=request.user,
+            full_name=request.POST.get("full_name"),
+            age=request.POST.get("age"),
+            dob=request.POST.get("dob"),
+            mobile=request.POST.get("mobile"),
+            job_preference=request.POST.get("job_preference"),
+            skills=request.POST.get("skills"),
+            profile_pic=request.FILES.get("profile_pic")
+        )
+        return redirect("home")
+
+    return render(request, "accounts/create_profile.html")

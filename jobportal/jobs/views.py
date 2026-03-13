@@ -9,14 +9,20 @@ from .forms import JobForm
 from django.utils import timezone
 from .models import SavedJob
 from django.contrib import messages
+from notifications.models import Notification
 from django.http import HttpResponseForbidden
 
 # from .models import Requirnment
 
 def job_list(request):
     # jobs = Job.objects.all()
+    
+    Job.objects.filter(
+        expires_at__lt=timezone.now().date()
+    ).update(status="closed")
+    
     jobs = Job.objects.filter(
-        expires_at__gt=timezone.now(),
+        expires_at__gt=timezone.now().date(),
         status="open"
     )
     saved_jobs = SavedJob.objects.filter(user=request.user).values_list("job_id", flat=True)
@@ -32,6 +38,11 @@ def job_list(request):
 
 def job_detail(request, id):
     job = get_object_or_404(Job, id=id)
+    
+    # Check if job expired
+    if job.expires_at and job.expires_at < timezone.now().date():
+        return render(request, "jobs/job_expired.html", {"job": job})
+    
     # requirment = get_object_or_404(Requirnment)  
     similar_jobs = Job.objects.filter(
         job_type=job.job_type
@@ -82,6 +93,11 @@ def update_application_status(request, app_id, status):
 
     application.status = status
     application.save()
+    
+    Notification.objects.create(
+        user=application.applicant,
+        message=f"Your application for {application.job.title} is now {status}"
+    )
 
     return redirect("jobs:view_applicants", job_id=application.job.id)
 
@@ -157,3 +173,38 @@ def saved_jobs(request):
     return render(request, "jobs/saved_jobs.html", {
         "saved_jobs": saved_jobs
     })
+
+@login_required
+def expired_jobs(request):
+    expired_jobs = Job.objects.filter(
+        expires_at__lt=timezone.now().date()
+    )
+
+    return render(request, "jobs/job_expired.html", {
+        "expired_jobs": expired_jobs
+    })
+    
+@login_required
+def hiring_analytics(request):
+    jobs = Job.objects.filter(employer=request.user)
+    total_jobs = jobs.count()
+    active_jobs = jobs.filter(
+        expires_at__gte=timezone.now().date()
+    ).count()
+
+    expired_jobs = jobs.filter(
+        expires_at__lt=timezone.now().date()
+    ).count()
+
+    total_applications = JobApplication.objects.filter(
+        job__employer=request.user
+    ).count()
+
+    context = {
+        "jobs": jobs,
+        "total_jobs": total_jobs,
+        "active_jobs": active_jobs,
+        "expired_jobs": expired_jobs,
+        "total_applications": total_applications,
+    }
+    return render(request, "jobs/hiring_analytics.html", context)

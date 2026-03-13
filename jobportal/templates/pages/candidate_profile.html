@@ -1,0 +1,160 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        
+        <nav class="flex mb-8 text-sm text-gray-500" aria-label="Breadcrumb">
+            <a href="javascript:history.back()" class="hover:text-blue-600 flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Back to Applicants
+            </a>
+        </nav>
+
+        <div class="bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-700 h-32 w-full"></div>
+            
+            <div class="px-8 pb-8">
+                <div class="relative -mt-12 flex items-end justify-between mb-6">
+                    <div class="flex items-end">
+                        <div class="p-1 bg-white rounded-full">
+                            <img src="{% static 'images/user.png' %}" 
+                                 class="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover bg-gray-100" 
+                                 alt="Profile Photo">
+                        </div>
+                        <div class="ml-6 mb-2">
+                            <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">
+                                {{ application.applicant.username }}
+                            </h1>
+                            <p class="text-gray-500 font-medium flex items-center">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                {{ application.applicant.email }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <span class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase 
+                            {% if application.status == 'Accepted' %} bg-green-100 text-green-700 
+                            {% elif application.status == 'Rejected' %} bg-red-100 text-red-700 
+                            {% else %} bg-blue-100 text-blue-700 {% endif %}">
+                            {{ application.status }}
+                        </span>
+                    </div>
+                </div>
+
+                <hr class="border-gray-100 mb-8">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="md:col-span-2 space-y-8">
+                        <section>
+                            <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+                                Cover Letter
+                            </h3>
+                            <div class="prose prose-blue bg-gray-50 p-6 rounded-xl text-gray-700 leading-relaxed italic border border-gray-100">
+                                {{ application.cover_letter|default:"The candidate did not provide a cover letter."|linebreaks }}
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                Curriculum Vitae
+                            </h3>
+                            {% if application.resume %}
+                            <div class="flex items-center justify-between p-4 border-2 border-dashed border-gray-200 rounded-xl hover:border-blue-400 transition-colors group">
+                                <div class="flex items-center">
+                                    <div class="bg-red-50 p-3 rounded-lg mr-4 group-hover:bg-red-100 transition-colors">
+                                        <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A1 1 0 0111 2.414l4.172 4.172a1 1 0 01.293.707V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-900 uppercase">Resume_v1.pdf</p>
+                                        <p class="text-xs text-gray-500 text-uppercase">PDF Document</p>
+                                    </div>
+                                </div>
+                                <a href="{{ application.resume.url }}" target="_blank" class="px-5 py-2 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 shadow-sm transition-all">
+                                    Download / View
+                                </a>
+                            </div>
+                            {% else %}
+                            <p class="text-gray-400 italic text-sm">No resume file attached.</p>
+                            {% endif %}
+                        </section>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Application Metadata</h4>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Target Role</p>
+                                    <p class="font-bold text-gray-900">{{ application.job.title }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Submission Date</p>
+                                    <p class="font-bold text-gray-900">{{ application.applied_at|date:"M d, Y" }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">ID Reference</p>
+                                    <p class="font-mono text-xs text-gray-900">#{{ application.id|stringformat:"05d" }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3">
+                            <button class="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all transform hover:-translate-y-0.5">
+                                <a href="{% url 'Pages:schedule_interview' %}">
+                                Schedule interview
+                                </a>
+                            </button>
+                           <button 
+                            onclick="openModal('{{ application.applicant.email }}')" 
+                            class="w-full py-3 bg-white border border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-50">
+                            Send Message
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Message Modal -->
+<div id="messageModal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center z-50">
+<div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
+<h2 class="text-xl font-bold mb-4">Send Message to Candidate</h2>
+<form method="POST" action="{% url 'Pages:send_mail' %}">
+{% csrf_token %}
+<input type="hidden" id="candidateEmail" name="email">
+<div class="mb-4">
+<label class="block text-sm font-semibold mb-1">Subject</label>
+<input type="text" name="subject" class="w-full border rounded-lg p-2" required>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-semibold mb-1">Message</label>
+<textarea name="message" rows="4" class="w-full border rounded-lg p-2" required></textarea>
+</div>
+<div class="flex justify-end gap-3">
+<button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-200 rounded-lg">
+Cancel
+</button>
+<button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+Send Email
+</button>
+</div>
+</form>
+</div>
+</div>
+
+{% endblock body %}
+
+{% block jsfile %}
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script src="{%static 'js/candidate.js' %}"></script>
+{% endblock jsfile %}

@@ -129,8 +129,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 <ul class="py-2 text-gray-700">
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
                   <a href="{% url 'jobs:saved_jobs' %}">
-Saved Jobs
-</a>
+                    Saved Jobs
+                  </a>
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
                   Applied job
@@ -156,13 +156,13 @@ Saved Jobs
                   <a href="{% url 'jobs:create_job' %}">+ Post New Job</a>
                 </li>
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Expired jobs
+                  <a href="{% url 'jobs:expired_jobs' %}">Expired jobs</a>
                 </li>
                 {% comment %} <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
                   <a href="{% url 'jobs:view_applicants' job.id %}">View Applicants</a>
                 </li> {% endcomment %}
                 <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                  Hiring analytics
+                  <a href="{% url 'jobs:hiring_analytics' %}">Hiring analytics</a>
                 </li>
               </ul>
                 {% endif %}
@@ -205,7 +205,7 @@ Saved Jobs
                     <a href="{% url 'Pages:create_resume' %}">Resume Building</a>
                   </li>
                   <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                    <a href="{% url 'Pages:counselling' %}">
+                    <a href="{% url 'Pages:schedule_interview' %}">
                       Schedule interview
                     </a>
                   </li>
@@ -213,10 +213,13 @@ Saved Jobs
                       <a href="{% url 'notifications:list' %}">Notification & Job Alerts</a>
                   </li>
                   <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                      <a href="{% url 'Pages:Skill_Assessment' %}">View candidate profile</a>
+                    
+                    <a href="{% url 'Pages:candidate' %}">
+                        View candidates profile
+                      </a>
                   </li>
                   <li class="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-                    <a href="{% url 'Pages:history' %}">Status updates</a>
+                    <a href="{% url 'Pages:Add_assessment' %}">Add Assessment</a>
                   </li>
 
                 </ul>

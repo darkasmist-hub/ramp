@@ -17,4 +17,6 @@ urlpatterns = [
     path("save/<int:job_id>/", views.save_job, name="save_job"),
     path("unsave/<int:job_id>/", views.unsave_job, name="unsave_job"),
     path("saved-jobs/", views.saved_jobs, name="saved_jobs"),
+    path("analytics/", views.hiring_analytics, name="hiring_analytics"),
+    path("expired-jobs/", views.expired_jobs, name="expired_jobs"),
 ]
