@@ -8,30 +8,50 @@
 {% endblock csslink %}
 
 {% block body %}
-<div class="container mx-auto mt-10">
+<div class="container mx-auto mt-12 px-4">
 
-    <h2 class="text-3xl font-bold text-center mb-8">Expired Jobs</h2>
+    <div class="flex items-center justify-between mb-10 border-b border-gray-200 pb-5">
+        <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">Expired Listings</h2>
+        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
+            Archived
+        </span>
+    </div>
 
     {% if expired_jobs %}
     
-        <div class="grid grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             {% for job in expired_jobs %}
-            <div class="bg-white shadow-lg rounded-xl p-6">
+            <div class="group bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl p-6 relative overflow-hidden">
+                
+                <div class="absolute top-0 left-0 w-1 h-full bg-gray-300 group-hover:bg-red-400 transition-colors"></div>
 
-                <h3 class="text-xl font-bold">{{ job.title }}</h3>
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-600 transition-colors">
+                        {{ job.title }}
+                    </h3>
+                </div>
 
-                <p class="text-gray-600">{{ job.company_name }}</p>
+                <div class="space-y-1">
+                    <p class="text-gray-700 font-medium flex items-center">
+                        <span class="mr-2">🏢</span> {{ job.company_name }}
+                    </p>
+                    <p class="text-gray-500 text-sm flex items-center">
+                        <span class="mr-2">📍</span> {{ job.location }}
+                    </p>
+                </div>
 
-                <p class="text-gray-500">{{ job.location }}</p>
+                <hr class="my-4 border-gray-50">
 
-                <p class="text-red-500 mt-2">
-                    Expired on {{ job.expires_at }}
-                </p>
-
-                <p class="text-gray-700 mt-2">
-                    Salary: ₹{{ job.salary }}
-                </p>
+                <div class="flex flex-col gap-2">
+                    <p class="text-gray-600 font-semibold text-sm">
+                        Salary: <span class="text-gray-900">₹{{ job.salary }}</span>
+                    </p>
+                    
+                    <p class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-red-500 bg-red-50 px-2 py-1 rounded w-fit">
+                        Expired: {{ job.expires_at|date:"M d, Y" }}
+                    </p>
+                </div>
 
             </div>
             {% endfor %}
@@ -40,16 +60,17 @@
 
     {% else %}
 
-        <div class="text-center bg-white shadow-lg p-8 rounded-xl">
-
-            <h1 class="text-3xl font-bold text-red-600 mb-4">
-                Job Expired
+        <div class="max-w-md mx-auto text-center bg-gray-50 border-2 border-dashed border-gray-200 p-12 rounded-3xl">
+            <div class="text-5xl mb-4">📁</div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">
+                All Clear!
             </h1>
-
-            <p class="text-gray-600">
-                Sorry, there are no expired jobs available.
+            <p class="text-gray-500">
+                There are currently no expired job postings in the archives.
             </p>
-
+            <a href="/jobs" class="mt-6 inline-block text-blue-600 font-semibold hover:underline">
+                View Active Jobs &rarr;
+            </a>
         </div>
 
     {% endif %}

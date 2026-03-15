@@ -1,0 +1,100 @@
+{% extends "home.html" %} 
+{% load static %} 
+{% block content %} 
+{% block csslink %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+  integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+{% endblock csslink %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto bg-white shadow-2xl rounded-3xl overflow-hidden border border-gray-100">
+        
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-10 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight flex items-center gap-3">
+                        <i class="fas fa-plus-square text-emerald-200"></i>
+                        Add Question
+                    </h2>
+                    <p class="text-emerald-50 mt-2">Build your assessment one question at a time.</p>
+                </div>
+                <div class="hidden md:block bg-white/20 px-4 py-2 rounded-2xl backdrop-blur-md">
+                    <span class="text-sm font-semibold">Assessment: {{ assessment.title|truncatechars:20 }}</span>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" class="p-8 lg:p-12 space-y-8">
+            {% csrf_token %}
+
+            <div class="space-y-3">
+                <label class="text-sm font-bold text-gray-700 uppercase tracking-wider flex items-center gap-2">
+                    <span class="bg-emerald-100 text-emerald-700 w-6 h-6 rounded-full flex items-center justify-center text-xs">Q</span>
+                    Question Text
+                </label>
+                <textarea name="question" rows="3" required
+                    placeholder="Enter the question here..."
+                    class="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 outline-none transition-all resize-none text-lg font-medium"></textarea>
+            </div>
+
+            <div class="space-y-4">
+                <label class="text-sm font-bold text-gray-700 uppercase tracking-wider ml-1">Answer Options</label>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for i in "1234" %}
+                    <div class="relative group">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-emerald-500 font-bold">
+                            {{ i }}
+                        </span>
+                        <input type="text" name="options" required
+                            placeholder="Option {{ i }}"
+                            class="w-full pl-10 pr-4 py-4 rounded-xl border border-gray-200 focus:ring-4 focus:ring-emerald-50/50 focus:border-emerald-400 outline-none transition-all">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="bg-emerald-50/50 p-6 rounded-2xl border border-emerald-100">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <label class="text-sm font-bold text-emerald-900 uppercase tracking-wider">Correct Option Index</label>
+                        <p class="text-xs text-emerald-600">Which option number is correct? (1-4)</p>
+                    </div>
+                    <div class="relative w-32">
+                        <input type="number" name="correct_option" required min="1" max="4"
+                            class="w-full px-4 py-3 rounded-xl border-2 border-emerald-200 focus:border-emerald-500 outline-none transition-all text-center font-bold text-emerald-700 text-xl">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-gray-100">
+
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button type="submit" 
+                    class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fas fa-save"></i>
+                    Save Question
+                </button>
+                <button type="submit" name="action" value="add_more"
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-blue-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    Save & Add Another
+                </button>
+                <button type="button" onclick="history.back()"
+                    class="px-8 py-4 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-2xl transition-all">
+                    Back to List
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock body %} 
+{% endblock %}

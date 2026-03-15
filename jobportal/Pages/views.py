@@ -224,9 +224,6 @@ def candidate_profile(request, application_id):
         "applications":applications
     })
 
-@login_required
-def Add_assessment(request):
-    return render(request, "Pages/Add_assessment.html")
 
 def send_mail_view(request):
     applications = JobApplication.objects.all()

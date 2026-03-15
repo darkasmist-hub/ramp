@@ -14,7 +14,8 @@ urlpatterns = [
   path("login/", views.user_login, name="user_login"),
   path("dashboard/seeker/", views.seeker_dashboard, name="seeker_dashboard"),
   path("dashboard/provider/", views.provider_dashboard, name="provider_dashboard"),
-  path("create-profile/", views.create_profile, name="create_profile")
+  path("create-profile/", views.create_profile, name="create_profile"),
+  path("edit-profile/", views.edit_profile, name="edit_profile"), 
 ]
 
 # urlpatterns = [

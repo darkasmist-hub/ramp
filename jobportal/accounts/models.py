@@ -38,7 +38,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 class CandidateProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=200)
-    age = models.IntegerField()
+    age = models.PositiveIntegerField(null=True, blank=True)
     dob = models.DateField()
     mobile = models.CharField(max_length=15)
     profile_pic = models.ImageField(upload_to="profile_pics/", blank=True, null=True)

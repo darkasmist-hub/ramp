@@ -119,12 +119,18 @@ def verify_otp_view(request):
             record = OTPStorage.objects.get(email=email, otp_code=user_otp)
 
             signup_data = request.session.get('signup_data')
-
-            user = User.objects.create_user(
-                username=signup_data['username'],
-                email=signup_data['email'],
-                password=signup_data['password']
-            )
+            username=signup_data['username'],
+            email=signup_data['email'],
+            password=signup_data['password']
+            
+            if User.objects.filter(username=username).exists():
+                user = User.objects.get(username=username)
+            else:
+                user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password
+                )
 
             user.profile.role = signup_data['role']
             user.profile.save()
@@ -196,26 +202,74 @@ def seeker_dashboard(request):
 def provider_dashboard(request):
     return render(request, 'accounts/provider_dashboard.html')
 
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('accounts:home')
 
 
-
+@login_required
 def create_profile(request):
 
+    profile = CandidateProfile.objects.filter(user=request.user).first()
+    if profile:
+        return redirect("accounts:edit_profile")
+    
     if request.method == "POST":
+        full_name = request.POST.get("full_name")
+        age = request.POST.get("age")
+        dob = request.POST.get("dob")
+        mobile = request.POST.get("mobile")
+        job_preference = request.POST.get("job_preference")
+        skills = request.POST.get("skills")
+        profile_pic = request.FILES.get("profile_pic")
+        resume = request.FILES.get("resume")
+        location = request.POST.get("location")
 
-        profile = CandidateProfile.objects.create(
+
+        # Check if any field is empty
+        if not all([full_name, age, dob, mobile, job_preference, skills, profile_pic]):
+            return render(request, "accounts/create_profile.html", {
+                "error": "All fields are required"
+            })
+
+        CandidateProfile.objects.create(
             user=request.user,
-            full_name=request.POST.get("full_name"),
-            age=request.POST.get("age"),
-            dob=request.POST.get("dob"),
-            mobile=request.POST.get("mobile"),
-            job_preference=request.POST.get("job_preference"),
-            skills=request.POST.get("skills"),
-            profile_pic=request.FILES.get("profile_pic")
+            full_name=full_name,
+            age=int(age),
+            dob=dob,
+            mobile=mobile,
+            job_preference=job_preference,
+            skills=skills,
+            profile_pic=profile_pic,
+            resume=resume,
+            location=location,
         )
-        return redirect("home")
+        return redirect("accounts:home")
 
     return render(request, "accounts/create_profile.html")
+
+
+@login_required
+def edit_profile(request):
+    profile = CandidateProfile.objects.get(user=request.user)
+    if request.method == "POST":
+        profile.full_name = request.POST.get("full_name")
+        profile.age = request.POST.get("age")
+        profile.dob = request.POST.get("dob")
+        profile.mobile = request.POST.get("mobile")
+        profile.job_preference = request.POST.get("job_preference")
+        profile.skills = request.POST.get("skills")
+
+        profile.location = request.POST.get("location")
+        
+        if request.FILES.get("profile_pic"):
+            profile.profile_pic = request.FILES.get("profile_pic")
+
+        if request.FILES.get("resume"):
+            profile.resume = request.FILES.get("resume")
+
+
+        profile.save()
+        return redirect("accounts:dashboard")
+    return render(request, "accounts/edit_profile.html", {"profile": profile})
