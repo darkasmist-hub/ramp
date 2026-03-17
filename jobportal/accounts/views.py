@@ -8,6 +8,7 @@ from .models import OTPStorage
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from datetime import datetime
+from Pages.models import Assessment
 from django.utils.timezone import now
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
@@ -188,7 +189,12 @@ def dashboard(request):
 def seeker_dashboard(request):
 
     # applications = JobApplication.objects.filter(applicant=request.user)
-
+    assessments = Assessment.objects.all()
+    applications = JobApplication.objects.filter(applicant=request.user)
+    job_ids = applications.values_list("job_id", flat=True)
+    assessments = Assessment.objects.filter(job_id__in=job_ids)
+    
+    print(f"COUNT: {assessments.count()}")
     # context = {
     #     "applied": applications.filter(status="applied"),
     #     "review": applications.filter(status="review"),
@@ -196,7 +202,9 @@ def seeker_dashboard(request):
     #     "rejected": applications.filter(status="rejected"),
     # }
 
-    return render(request, "accounts/seeker_dashboard.html",)
+    return render(request, "accounts/seeker_dashboard.html", {
+        "assessments": assessments
+    })
 
 @login_required
 def provider_dashboard(request):

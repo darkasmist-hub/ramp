@@ -29,7 +29,7 @@ class AssessmentTemplate(models.Model):
     description = models.TextField()
     duration = models.IntegerField(help_text="Duration in minutes")
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    job = models.ForeignKey(Job, on_delete=models.CASCADE,blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -38,7 +38,10 @@ class AssessmentTemplate(models.Model):
 class Question(models.Model):
     assessment = models.ForeignKey(AssessmentTemplate, on_delete=models.CASCADE)
     text = models.TextField()
-    correct_option = models.IntegerField()
+    correct_option = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.text
 
 
 class Option(models.Model):

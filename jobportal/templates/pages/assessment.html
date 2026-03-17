@@ -1,0 +1,45 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}career counselling{% endblock title %}
+{% block csslink %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/Skill_Assessment.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock csslink %}
+{% block body %}
+
+<div class="p-4">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4 px-4">Available Assessments</h3>
+    <ul class="space-y-3">
+        {% for assessment in assessments %}
+        <li class="group block p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:border-blue-400 hover:shadow-md transition-all duration-200">
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <h4 class="text-md font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {{ assessment.title }}
+                    </h4>
+                    <p class="text-sm text-gray-500 mt-1 line-clamp-2">
+                        {{ assessment.description|default:"Test your skills to improve your profile visibility." }}
+                    </p>
+                </div>
+                
+                <div class="ml-4">
+                    <a href="{% url 'Pages:Skill_Assessment' assessment.id %}" 
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-colors">
+                        Start
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </li>
+        {% empty %}
+        <li class="px-4 py-8 text-center border-2 border-dashed border-gray-200 rounded-lg">
+            <p class="text-gray-400 italic">No assessments available at this time.</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock body %}

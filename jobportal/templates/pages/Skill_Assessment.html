@@ -1,51 +1,55 @@
 {% extends 'home.html' %}
 {% load static %}
-
 {% block title %}career counselling{% endblock title %}
-
 {% block csslink %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 <link rel="stylesheet" href="{% static 'css/Skill_Assessment.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 {% endblock csslink %}
-
-
 {% block body %}
-  
-<div class="container">
-    <h2>Skill Assessment Test</h2>
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg my-10">
+    
+    <h2 class="text-2xl font-bold text-center border-b pb-4">{{ assessment.title }}</h2>
+    <p class="text-gray-600 my-4">{{ assessment.description }}</p>
 
-    <form method="POST">
+    <form method="POST" class="space-y-6">
         {% csrf_token %}
-
-        <div class="question">
-            <p>1. Which language is used for backend development?</p>
-            <label><input type="radio" name="q1" value="python"> Python</label>
-            <label><input type="radio" name="q1" value="html"> HTML</label>
-            <label><input type="radio" name="q1" value="css"> CSS</label>
+        
+        {% for q in questions %}
+        <div class="p-4 border rounded bg-gray-50">
+            <p class="font-semibold mb-2">{{ forloop.counter }}. {{ q.question }}</p>
+            
+            <div class="flex flex-col space-y-2">
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="question_{{ q.id }}" value="{{ q.option1 }}" required>
+                    <span>{{ q.option1 }}</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="question_{{ q.id }}" value="{{ q.option2 }}">
+                    <span>{{ q.option2 }}</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="question_{{ q.id }}" value="{{ q.option3 }}">
+                    <span>{{ q.option3 }}</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="question_{{ q.id }}" value="{{ q.option4 }}">
+                    <span>{{ q.option4 }}</span>
+                </label>
+            </div>
         </div>
+        {% endfor %}
 
-        <div class="question">
-            <p>2. Which framework is used with Python for web development?</p>
-            <label><input type="radio" name="q2" value="django"> Django</label>
-            <label><input type="radio" name="q2" value="react"> React</label>
-            <label><input type="radio" name="q2" value="node"> Node</label>
-        </div>
-
-        <div class="question">
-            <p>3. Which is a markup language?</p>
-            <label><input type="radio" name="q3" value="html"> HTML</label>
-            <label><input type="radio" name="q3" value="python"> Python</label>
-            <label><input type="radio" name="q3" value="java"> Java</label>
-        </div>
-
-        <button type="submit">Submit Test</button>
+        <button type="submit" class="mt-6 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+            Submit Test
+        </button>
     </form>
 
     {% if score is not None %}
-        <div class="result">
-            Your Score: {{ score }} / 3
-        </div>
+    <div class="mt-6 p-4 bg-green-100 text-green-800 rounded">
+        <strong>Your Score: {{ score }} / {{ questions|length }}</strong>
+    </div>
     {% endif %}
 </div>
+
 {% endblock body %}

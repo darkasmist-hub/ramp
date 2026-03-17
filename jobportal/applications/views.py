@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from .forms import JobApplicationForm
 from django.contrib import messages
 from .models import AssessmentTemplate
+from Pages.models import Assessment
 from .models import Question, Option
 
 
@@ -54,21 +55,28 @@ def apply_job(request, job_id):
 
 @login_required
 def create_assessment(request):
-
+    applications = JobApplication.objects.all()
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
         duration = request.POST.get("duration")
+        
+        application_id = request.POST.get("candidate")
 
-        template = AssessmentTemplate.objects.create(
+        application = JobApplication.objects.get(id=application_id)
+        job = application.job
+        
+        template = Assessment.objects.create(
             title=title,
             description=description,
             duration=duration,
-            created_by=request.user
+            job=job
         )
         return redirect("applications:add_question", template.id)
 
-    return render(request, "applications/create_assessment.html")
+    return render(request, "applications/create_assessment.html", {
+        "applications": applications
+    })
 
 
 
@@ -93,7 +101,7 @@ def add_question(request, template_id):
         action = request.POST.get("action")
         if action == "add_more":
             return redirect("applications:add_question", template_id)
-        return redirect("applications:create_assessment", assessment.job.id)
+        return redirect("applications:create_assessment")
 
     return render(request, "applications/add_question.html", {
         "assessment": assessment

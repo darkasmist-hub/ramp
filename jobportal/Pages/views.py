@@ -14,6 +14,8 @@ from .models import Contact
 from django.contrib import messages
 from .models import SkillAssessment
 from jobs.models import JobApplication
+from .models import Assessment,Question
+
 from notifications.models import Interview, Notification
 
 
@@ -35,8 +37,8 @@ def history(request):
 def contact(request):
   return render(request, 'Pages/contact.html')
 
-def Skill_Assessment(request):
-    return render(request, 'Pages/Skill_Assessment.html')
+# def Skill_Assessment(request):
+#     return render(request, 'Pages/Skill_Assessment.html')
 
 
 def format_bold(text):
@@ -93,26 +95,6 @@ def download_resume(request, resume_id):
     pisa.CreatePDF(html, dest=response)
     return response
 
-
-def skill_assessment(request):
-    score = None
-    if request.method == "POST":
-        answers = [
-            request.POST.get("q1"),
-            request.POST.get("q2"),
-            request.POST.get("q3"),
-        ]
-        SkillAssessment.objects.create(
-        user=request.user,
-        score=score
-    )
-        correct_answers = ["python", "django", "html"]
-        score = 0
-        for i in range(len(correct_answers)):
-            if answers[i] == correct_answers[i]:
-                score += 1
-
-    return render(request, "Pages/skill_assessment.html", {"score": score})
 
 @login_required
 def contact_mail(request):
@@ -246,3 +228,30 @@ def send_mail_view(request):
         messages.success(request, "Message sent successfully!")
 
     return redirect("Pages:candidate")
+
+def Skill_Assessment(request, assessment_id):
+    assessments = Assessment.objects.all()
+    assessment = get_object_or_404(Assessment, id=assessment_id)
+    questions = Question.objects.all()
+    score = None
+    if request.method == "POST":
+        score = 0
+        for q in questions:
+            user_answer = request.POST.get(f"question_{q.id}")
+            if user_answer == q.correct_answer:
+                score += 1
+        SkillAssessment.objects.create(
+        user=request.user,
+        assessment=assessment,
+        score=score
+    )
+    return render(request, "Pages/Skill_Assessment.html", {
+        "assessment": assessment,
+        "questions": questions,
+        "score": score,
+        # "assessments": assessments
+    })
+    
+def assessment(request):
+    assessments = Assessment.objects.all()
+    return render(request, "Pages/assessment.html",{"assessments": assessments})

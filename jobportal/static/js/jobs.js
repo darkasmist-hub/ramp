@@ -37,36 +37,43 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function filterJobs(locationValue = null) {
+    // If the function was triggered by an Event (like a click or change), 
+    // reset locationValue to null unless it was specifically passed as a string.
+    if (locationValue && typeof locationValue !== 'string') {
+        locationValue = null; 
+    }
+
     const selectedTypes = [...document.querySelectorAll(".type-job input:checked")].map(i => i.value);
-    document.getElementById('range-value').textContent = salaryRange.value;
     const selectedStations = [...document.querySelectorAll("#station-id input:checked")].map(i => i.value);
     
-    // Get the highest checked checkbox value OR the slider value
+    // Update the UI for the slider value
+    document.getElementById('range-value').textContent = salaryRange.value;
+
     const checkedSalaries = [...document.querySelectorAll(".salary-container input:checked")].map(i => Number(i.value));
     const minSalaryThreshold = checkedSalaries.length > 0 ? Math.max(...checkedSalaries) : 0;
     const sliderValue = Number(salaryRange.value);
-
-    // Final threshold is whichever is higher: checkboxes or slider
     const finalMinSalary = Math.max(minSalaryThreshold, sliderValue);
 
     jobCards.forEach(card => {
-      let show = true;
-      const jobSalary = Number(card.dataset.salary);
-      const jobType = card.dataset.type;
-      const jobStation = card.dataset.station;
-      const jobLoc = card.dataset.job.toLowerCase();
+        let show = true;
+        const jobSalary = Number(card.dataset.salary);
+        const jobType = card.dataset.type;
+        const jobStation = card.dataset.station;
+        const jobLoc = card.dataset.job.toLowerCase();
 
-      // Filter Logic
-      if (selectedTypes.length && !selectedTypes.includes(jobType)) show = false;
-      if (selectedStations.length && !selectedStations.includes(jobStation)) show = false;
-      if (locationValue && typeof locationValue === 'string' && jobLoc !== locationValue.toLowerCase()) show = false;
-      
-      //  Improved Salary Logic: Must be greater than the selected threshold
-      if (jobSalary < finalMinSalary) {
-        show = false;
-      }
+        // 1. Type Filter
+        if (selectedTypes.length && !selectedTypes.includes(jobType)) show = false;
+        
+        // 2. Station Filter
+        if (selectedStations.length && !selectedStations.includes(jobStation)) show = false;
+        
+        // 3. Location Filter
+        if (locationValue && jobLoc !== locationValue.toLowerCase()) show = false;
+        
+        // 4. Salary Logic
+        if (jobSalary < finalMinSalary) show = false;
 
-      card.style.display = show ? "flex" : "none";
+        card.style.display = show ? "flex" : "none";
     });
-  }
+}
 });
